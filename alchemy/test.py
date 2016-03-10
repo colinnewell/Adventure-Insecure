@@ -4,6 +4,7 @@ import tempfile
 from model import Base, Employee, LunchOrder
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import select, column, func, text
 
 
 class DBTest(unittest.TestCase):
@@ -25,8 +26,16 @@ class DBTest(unittest.TestCase):
 
         session.commit()
 
+        session = DBSession()
+        s = select([text('sum(employee.id) + 1')]).select_from(Employee)
+        result = session.execute(s)
+
+
 
 
 if __name__ == '__main__':
+    import logging
+    logging.basicConfig()
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     unittest.main()
 
