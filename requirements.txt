@@ -2,4 +2,5 @@ psycopg2
 Flask
 Flask-SQLAlchemy
 Flask-Migrate
+Flask-WTF
 uwsgi
