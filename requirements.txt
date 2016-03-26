@@ -3,4 +3,5 @@ Flask
 Flask-SQLAlchemy
 Flask-Migrate
 Flask-WTF
+Flask-Bootstrap
 uwsgi
