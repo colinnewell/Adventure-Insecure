@@ -9,3 +9,9 @@ class LoginForm(Form):
     password = PasswordField('Password',
                              [Required(message='Must specify a password')])
     submit = SubmitField('Login')
+
+
+class SignupForm(Form):
+    email = TextField('Email Address', [Email(),
+                      Required(message='This is required')])
+    submit = SubmitField('Signup')
