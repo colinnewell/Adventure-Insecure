@@ -23,5 +23,3 @@ app.register_blueprint(auth)
 @app.route('/')
 def hello():
     return "Hello World!"
-
-db.create_all()
