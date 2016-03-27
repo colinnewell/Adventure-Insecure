@@ -1,10 +1,10 @@
 from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for
+    flash, session, redirect, url_for, abort
 
 from werkzeug import check_password_hash, generate_password_hash
 
 from app.auth.models import User, SignupAttempt
-from app.auth.forms import LoginForm, SignupForm
+from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 
 from app import db
 
@@ -19,7 +19,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
             flash('Welcome %s' % user.name)
-            return redirect(url_for('auth.home'))
+            return redirect(url_for('index'))
         flash('Incorrect email or password', 'error-message')
     return render_template('auth/login.html', form=form)
 
@@ -42,3 +42,23 @@ def signup():
             # send them a signup email.
         flash('Email sent', 'message')
     return render_template('auth/signup.html', form=form)
+
+@auth.route('/register/<token>', methods=['GET', 'POST'])
+def register(token):
+    # check for a signup attempt.
+    # bounce them if it's not found.
+    attempt = SignupAttempt.query.filter_by(registration_code=token).first()
+    if not attempt:
+        abort(404)
+    form = RegistrationForm(request.form)
+    if form.validate_on_submit():
+        # create new user
+        # clobber the signup attempt token.
+        u = User(form.name.data, attempt.email, generate_password_hash(form.password.data))
+        db.session.add(u)
+        db.session.commit()
+        # bounce them to login page
+        # or perhaps just log them in?
+        return redirect(url_for('auth.login'))
+    # check expiry
+    return render_template('auth/register.html', form=form, email=attempt.email)

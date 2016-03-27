@@ -15,3 +15,10 @@ class SignupForm(Form):
     email = StringField('Email Address', [Email(),
                       Required(message='This is required')])
     submit = SubmitField('Signup')
+
+
+class RegistrationForm(Form):
+    name = StringField('Name', [Required(message='This is required')])
+    password = PasswordField('Password',
+                             [Required(message='Must specify a password')])
+    submit = SubmitField('Login')
