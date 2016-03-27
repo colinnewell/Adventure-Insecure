@@ -12,6 +12,6 @@ class LoginForm(Form):
 
 
 class SignupForm(Form):
-    email = TextField('Email Address', [Email(),
+    email = StringField('Email Address', [Email(),
                       Required(message='This is required')])
     submit = SubmitField('Signup')

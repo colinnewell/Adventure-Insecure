@@ -32,6 +32,7 @@ def signup():
             flash('Welcome %s' % user.name)
             return redirect(url_for('auth.home'))
         else:
+            pass
             # send them a signup email.
         flash('Incorrect email or password', 'error-message')
     return render_template('auth/signup.html', form=form)
