@@ -1,4 +1,5 @@
 from app import db
+from app.security import secure_token
 
 
 class Base(db.Model):
@@ -9,6 +10,26 @@ class Base(db.Model):
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
                               onupdate=db.func.current_timestamp())
+
+
+class SignupAttempt(Base):
+
+    __tablename__ = 'signup_attempts'
+
+    email = db.Column(db.String(128), nullable=False, unique=True)
+    registration_code = db.Column(db.String(128), nullable=False)
+
+    def __init__(self, email, registration_code):
+
+        self.email = email
+        self.registration_code = registration_code
+
+    def __repr__(self):
+        return "<Signup attempt %r>" % self.email
+
+    @classmethod
+    def AttemptFor(cls, email):
+        return cls(email, secure_token())
 
 
 class User(Base):

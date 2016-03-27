@@ -3,8 +3,10 @@ from flask import Blueprint, request, render_template, \
 
 from werkzeug import check_password_hash, generate_password_hash
 
-from app.auth.models import User
+from app.auth.models import User, SignupAttempt
 from app.auth.forms import LoginForm, SignupForm
+
+from app import db
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -25,14 +27,18 @@ def login():
 def signup():
     form = SignupForm(request.form)
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password, form.password.data):
+        email = form.email.data
+        user = User.query.filter_by(email=email).first()
+        # FIXME: check email domain.
+        if user:
             # if the user is found send them a password reset email
             session['user_id'] = user.id
             flash('Welcome %s' % user.name)
-            return redirect(url_for('auth.home'))
         else:
-            pass
+            # FIXME: check for existing attempts.
+            attempt = SignupAttempt.AttemptFor(email)
+            db.session.add(attempt)
+            db.session.commit()
             # send them a signup email.
-        flash('Incorrect email or password', 'error-message')
+        flash('Email sent', 'message')
     return render_template('auth/signup.html', form=form)
