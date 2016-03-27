@@ -4,7 +4,7 @@ from flask import Blueprint, request, render_template, \
 from werkzeug import check_password_hash, generate_password_hash
 
 from app.auth.models import User
-from app.auth.forms import LoginForm
+from app.auth.forms import LoginForm, SignupForm
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 

@@ -1,0 +1,22 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "bootstrap/utils.html" as utils %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<div class="container">
+<h1>Sign up</h1>
+<p>Enter your email address and we will send you a registration link.
+You can either click the link provided, or enter the code provided into
+the <a href="/auth/register">registration</a> page.
+</p>
+<p>Note that only email addresses from the following domains will be 
+accepted.</p>
+<ul>
+    <li>minnow.com</li>
+    <li>babel.com</li>
+</ul>
+{{ utils.flashed_messages() }}
+{{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
