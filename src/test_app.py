@@ -21,7 +21,7 @@ class AppTestCase(unittest.TestCase):
 
     def test_base(self):
         rv = self.app.get('/')
-        assert 'Hello' in rv.data.decode('utf-8')
+        assert 'Lunch Ordering' in rv.data.decode('utf-8')
 
     def get_csrf_token(self, rv):
         m = re.search('.*name="csrf_token".*?value="([^"]+)".*',
