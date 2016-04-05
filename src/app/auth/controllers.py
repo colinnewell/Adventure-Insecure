@@ -7,6 +7,7 @@ from app.auth.models import User, SignupAttempt
 from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 
 from app import db
+import logging
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -19,9 +20,16 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
             flash('Welcome %s' % user.name)
+            logging.debug("User %s logged in" % user.name)
             return redirect(url_for('index'))
         flash('Incorrect email or password', 'error-message')
+        logging.debug('Incorrect email or password')
     return render_template('auth/login.html', form=form)
+
+@auth.route('/logout', methods=['POST'])
+def logout():
+    session['user_id'] = None
+    return redirect(url_for('index'))
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():

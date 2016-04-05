@@ -15,6 +15,12 @@
           <a class="navbar-brand" href="#">Lunch Orders</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+          {% if session['user_id'] %}
+          <form class="navbar-form navbar-right" action="/auth/logout" method="post">
+            <button type="submit" class="btn btn-success">Log out</button>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          </form>
+          {% else %}
           <form class="navbar-form navbar-right" action="/auth/login" method="post">
             <div class="form-group">
               <input name="email" type="text" placeholder="Email" class="form-control">
@@ -25,6 +31,7 @@
             <button type="submit" class="btn btn-success">Sign in</button>
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
           </form>
+          {% endif %}
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
