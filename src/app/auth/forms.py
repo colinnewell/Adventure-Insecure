@@ -1,7 +1,7 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import Required, Email, EqualTo
-from app.csrf import generate_csrf
+from app.csrf import generate_csrf, validate_csrf
 
 
 class LoginForm(Form):
@@ -17,6 +17,11 @@ class LoginForm(Form):
             return None
         return generate_csrf(self.SECRET_KEY, self.TIME_LIMIT)
 
+    def validate_csrf_token(self, field):
+        if not self.csrf_enabled:
+            return True
+        if not validate_csrf(field.data, self.SECRET_KEY, self.TIME_LIMIT):
+            raise ValidationError(field.gettext('CSRF token missing'))
 
 class SignupForm(Form):
     email = StringField('Email Address', [Email(),

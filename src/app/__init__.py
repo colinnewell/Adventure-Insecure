@@ -1,10 +1,12 @@
 from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CsrfProtect
 import os
 
 app = Flask(__name__)
 Bootstrap(app)
+CsrfProtect(app)
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 db = SQLAlchemy(app)
