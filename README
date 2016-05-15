@@ -17,6 +17,10 @@ Work from the src directory,
 
     DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python run.py
 
+#### Tests
+
+    DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python -m unittest
+
 ### DB Management
 
 #### DB setup
