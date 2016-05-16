@@ -10,7 +10,7 @@ class SecurityTest(unittest.TestCase):
         random.seed(1001)
         token = secure_token()
         self.assertEqual(len(token), 64)
-        e = "78858341de6318734209c4c993a330fe29b4feccdbd17a2ec2f22e12f0179026"
+        e = "3e70ac6dab84ef33d5570b541a4d376772c091e504fdb220b033cfa5f265d0fd"
         self.assertEqual(token, e)
 
 
