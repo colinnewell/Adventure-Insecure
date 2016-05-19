@@ -15,8 +15,12 @@ accepted.</p>
     <li>minnow.com</li>
     <li>babel.com</li>
 </ul>
+<div>
 {{ utils.flashed_messages() }}
 {{ wtf.quick_form(form) }}
+</div>
+<p>Once you have your email follow the link or go here to 
+<a href="/auth/register">register</a>.</p>
 </div>
 {% endblock %}
 

@@ -33,6 +33,7 @@ class SignupForm(OwnCSRF, Form):
 
 
 class RegistrationForm(OwnCSRF, Form):
+    token = StringField('Token', [Required(message='This is required')])
     name = StringField('Name', [Required(message='This is required')])
     password = PasswordField('Password',
                              [Required(message='Must specify a password')])
