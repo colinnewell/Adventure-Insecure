@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import Required, Email, EqualTo
+from wtforms.validators import Required, Email, EqualTo, Regexp
 from app.csrf import generate_csrf, validate_csrf
 
 class OwnCSRF():
@@ -26,7 +26,9 @@ class LoginForm(OwnCSRF, Form):
 
 class SignupForm(OwnCSRF, Form):
     email = StringField('Email Address', [Email(),
-                      Required(message='This is required')])
+                      Required(message='This is required'),
+                      Regexp('.*@(minnow|babel).com$', message='Only company email addresses can be used.')
+                      ])
     submit = SubmitField('Signup')
 
 
