@@ -10,6 +10,8 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
     DATABASE_URI = SQLALCHEMY_DATABASE_URI  # os.environ['DATABASE_URL']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_FILE_DIR = '/tmp/sessions'
+    SESSION_TYPE = 'filesystem'
 
 
 class ProductionConfig(Config):

@@ -5,4 +5,5 @@ Flask-Migrate
 Flask-WTF
 Flask-Mail
 Flask-Bootstrap
+Flask-Session
 uwsgi
