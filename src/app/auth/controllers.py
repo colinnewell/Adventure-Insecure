@@ -76,8 +76,5 @@ def register(token):
         db.session.add(u)
         db.session.delete(attempt)
         db.session.commit()
-        # bounce them to login page
-        # or perhaps just log them in?
         return redirect(url_for('auth.login'))
-    # check expiry
     return render_template('auth/register.html', form=form, email=attempt.email)
