@@ -7,6 +7,8 @@ from app.auth.models import User, SignupAttempt
 from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 
 from app import db
+from datetime import datetime, timedelta
+
 import logging
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -58,12 +60,21 @@ def register(token):
     attempt = SignupAttempt.query.filter_by(registration_code=token).first()
     if not attempt:
         abort(404)
+
+    day = timedelta(days=1)
+    if attempt.date_created + day < datetime.today():
+        # expired.
+        db.session.delete(attempt)
+        db.session.commit()
+        abort(404)
+
     form = RegistrationForm(request.form)
     if form.validate_on_submit():
         # create new user
         # clobber the signup attempt token.
         u = User(form.name.data, attempt.email, generate_password_hash(form.password.data))
         db.session.add(u)
+        db.session.delete(attempt)
         db.session.commit()
         # bounce them to login page
         # or perhaps just log them in?
