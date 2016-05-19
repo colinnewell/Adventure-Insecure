@@ -25,7 +25,7 @@ class SignupAttempt(Base):
         self.registration_code = registration_code
 
     def __repr__(self):
-        return "<Signup attempt %r>" % self.email
+        return "<Signup attempt from %s: %r, %r>" % (self.date_created, self.email, self.registration_code)
 
     @classmethod
     def AttemptFor(cls, email):

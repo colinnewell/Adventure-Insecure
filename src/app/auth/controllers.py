@@ -64,6 +64,7 @@ def register(token):
     day = timedelta(days=1)
     if attempt.date_created + day < datetime.today():
         # expired.
+        logging.debug("Removing expired token %s" % attempt)
         db.session.delete(attempt)
         db.session.commit()
         abort(404)
