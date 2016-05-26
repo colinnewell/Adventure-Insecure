@@ -1,10 +1,12 @@
-{% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
-{% import "bootstrap/utils.html" as utils %}
+{% extends "wrapper.html" %}
 {% block title %}Register{% endblock %}
 {% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Register</h1>
+  </div>
+</div>
 <div class="container">
-<h1>Register</h1>
 {{ utils.flashed_messages() }}
 {{ wtf.quick_form(form) }}
 </div>
