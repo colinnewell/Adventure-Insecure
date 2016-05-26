@@ -24,6 +24,8 @@ def not_found(error):
 # note, this import needs to come after the definition of db.
 from app.auth.controllers import auth
 app.register_blueprint(auth)
+from app.menus.controller import menus
+app.register_blueprint(menus)
 
 
 @app.route('/')

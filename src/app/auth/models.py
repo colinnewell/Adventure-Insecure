@@ -1,15 +1,6 @@
 from app import db
 from app.security import secure_token
-
-
-class Base(db.Model):
-
-    __abstract__ = True
-
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(),
-                              onupdate=db.func.current_timestamp())
+from app.base_model import Base
 
 
 class SignupAttempt(Base):
@@ -40,6 +31,8 @@ class User(Base):
 
     email = db.Column(db.String(128), nullable=False, unique=True)
     password = db.Column(db.String(192), nullable=False)
+
+    # FIXME: should allow deactivation of users.
 
     def __init__(self, name, email, password):
 
