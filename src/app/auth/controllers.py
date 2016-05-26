@@ -58,11 +58,11 @@ def register_no_token():
     form = RegistrationForm(request.form)
     if form.validate_on_submit():
         attempt = find_signup_attempt(form.token.data)
-        if not attempt:
-            # FIXME: display a validation error.
-            pass
-        create_user(attempt, form)
-        return redirect(url_for('auth.login'))
+        if attempt:
+            create_user(attempt, form)
+            return redirect(url_for('auth.login'))
+        else:
+            form.token.errors.append('Unable to find registration token, perhaps it has expired.')
     return render_template('auth/register.html', form=form)
 
 
