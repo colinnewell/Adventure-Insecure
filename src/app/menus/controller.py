@@ -4,6 +4,9 @@ from werkzeug import secure_filename
 from app.auth.utils import login_required
 from app.menus.models import Menu
 from app.menus.forms import BulkUploadForm
+from zipfile import ZipFile
+from tarfile import TarFile
+import os
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
 
@@ -16,15 +19,26 @@ menus = Blueprint('menus', __name__, url_prefix='/menus')
 @login_required
 def bulk_upload():
     form = BulkUploadForm(request.form)
-    #import pdb; pdb.set_trace()
-    if form.validate_on_submit() and form.menu.has_file():
-        filename = secure_filename(form.menu.data.filename)
-        form.menu.data.save('uploads/' + filename)
-        # then open the menus with the zip library
-        # and extract them to be served up.
-        # create a Menu object.
-        # take the zip file
-        # and upload the pdfs
-        pass
+    if form.validate_on_submit() and 'menu' in request.files:
+        file = request.files['menu']
+        filename = secure_filename(file.filename)
+        if filename.endswith(".zip"):
+            with ZipFile(file, mode='r') as z:
+                # FIXME: get path from config.
+                z.extractall('/tmp/upload')
+        # FIXME: allow zipped tarballs too.
+        # .tgz, .tar.gz, .tar.bz2, tar.xz?
+        elif filename.endswith(".tar"):
+            # do a path combine
+            # save this in a temporary path
+            # and clean it up when we're done.
+            local_filename = os.path.join('/tmp/upload/', filename)
+            file.save(local_filename)
+            with TarFile.open(local_filename, mode='r') as t:
+                # FIXME: get path from config.
+                t.extractall('/tmp/upload')
+        else:
+            # add a validation error.
+            pass
     return render_template('menus/upload.html', form=form)
 

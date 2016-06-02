@@ -12,6 +12,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_FILE_DIR = '/tmp/sessions'
     SESSION_TYPE = 'filesystem'
+    UPLOAD_FOLDER = '/tmp/upload'
+
 
 
 class ProductionConfig(Config):
