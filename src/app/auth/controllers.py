@@ -7,11 +7,21 @@ from app.auth.models import User, SignupAttempt
 from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 
 from app import db
+from flask import current_app
 from datetime import datetime, timedelta
 
 import logging
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
+
+
+def rotate_session():
+    # NOTE: this prods the underlying class
+    # so this may be tied into the underlying Werkzeug class
+    si = current_app.session_interface
+    cache = si.cache
+    cache.delete(session.sid)
+    session.sid = si._generate_sid()
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -22,6 +32,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
             session['user_id'] = user.id
             flash('Welcome %s' % user.name)
+            rotate_session()
             logging.debug("User %s logged in" % user.name)
             return redirect(url_for('index'))
         flash('Incorrect email or password', 'error-message')
@@ -30,7 +41,9 @@ def login():
 
 @auth.route('/logout', methods=['POST'])
 def logout():
+    rotate_session()
     session['user_id'] = None
+    # FIXME: rotate session
     return redirect(url_for('index'))
 
 @auth.route('/signup', methods=['GET', 'POST'])
