@@ -26,6 +26,8 @@ from app.auth.controllers import auth
 app.register_blueprint(auth)
 from app.menus.controller import menus
 app.register_blueprint(menus)
+from app.lunch.controller import lunch
+app.register_blueprint(lunch)
 
 
 @app.route('/')
