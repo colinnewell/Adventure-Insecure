@@ -19,7 +19,7 @@ class LDAP:
     def add_user(self, username, name, surname, password, group_id, user_id):
         # escape usernames
         # FIXME: hash password.
-        self.connection.add('uid=%s,ou=People,%s' % (username, self.dn), ['posixAccount','inetOrgPerson'], {
+        self.connection.add('uid=%s,ou=People,%s' % (username, self.dn), ['posixAccount','inetOrgPerson', 'shadowAccount'], {
             'uid': username,
             'sn': surname,
             'displayName': name,
@@ -28,10 +28,13 @@ class LDAP:
             'gidNumber': group_id,
             'uidNumber': user_id,
             'homeDirectory': '/home/%s' % username,
+            'loginShell': '/bin/bash',
+            'gecos': '',
+            'description': 'Test user',
         })
 
 
-server = Server('172.23.0.2')
+server = Server('172.21.0.2')
 conn = Connection(server, user="cn=admin,dc=adventure,dc=org", password="notaverysecurepassword")
 conn.bind()
 ldap = LDAP(conn, 'dc=adventure,dc=org')
