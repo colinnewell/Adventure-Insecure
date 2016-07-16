@@ -8,7 +8,7 @@ MAINTAINER Colin Newell <colin.newell@gmail.com>
 
 COPY ldap-selections /tmp
 RUN debconf-set-selections /tmp/ldap-selections
-RUN apt-get update && apt-get install -y openssh-server libnss-ldapd sudo 
+RUN apt-get update && apt-get install -y openssh-server libnss-ldapd sudo
 RUN mkdir /var/run/sshd
 RUN echo 'root:screencast' | chpasswd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -22,4 +22,5 @@ RUn echo 'session    required    pam_mkhomedir.so skel=/etc/skel/ umask=0077' >>
 #RUN echo "export VISIBLE=now" >> /etc/profile
 
 EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+COPY entrypoint.sh /entrypoint.sh
+CMD ["/entrypoint.sh"]
