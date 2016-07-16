@@ -1,0 +1,3 @@
+nslcd   nslcd/ldap-uris string  ldap://ldap/
+nslcd   nslcd/ldap-base string  dc=adventure,dc=org
+libnss-ldapd:amd64      libnss-ldapd/nsswitch   multiselect     aliases, group, passwd, shadow

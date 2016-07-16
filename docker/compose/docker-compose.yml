@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+
+# FIXME: add a proper db server.
+  ldap:
+    image: osixia/openldap
+    environment:
+      LDAP_DOMAIN: adventure.org
+      LDAP_ORGANISATION: Adventure
+      LDAP_ADMIN_PASSWORD: notaverysecurepassword
+
+  # create volumes to link ssh and nginx up.
+  ssh:
+    image: adventure/sshd
+    links:
+      - ldap
+
+  site:
+    image: adventure/ldap
+
+  nginx:
+    image: adventure/nginx
+    links:
+      - site
+
+
