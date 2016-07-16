@@ -4,7 +4,7 @@ services:
 
 # FIXME: add a proper db server.
   ldap:
-    image: osixia/openldap
+    image: adventure/ldap
     environment:
       LDAP_DOMAIN: adventure.org
       LDAP_ORGANISATION: Adventure
@@ -17,7 +17,7 @@ services:
       - ldap
 
   site:
-    image: adventure/ldap
+    image: adventure/adventure
 
   nginx:
     image: adventure/nginx
