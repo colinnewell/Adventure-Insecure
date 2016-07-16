@@ -1,0 +1,8 @@
+dn: ou=People,dc=adventure,dc=org
+objectClass: organizationalUnit
+ou: People
+
+dn: ou=Groups,dc=adventure,dc=org
+objectClass: organizationalUnit
+ou: Groups
+

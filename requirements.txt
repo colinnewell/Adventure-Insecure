@@ -7,3 +7,4 @@ Flask-Mail
 Flask-Bootstrap
 Flask-Session
 uwsgi
+ldap3
