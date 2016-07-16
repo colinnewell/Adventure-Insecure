@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, \
 from werkzeug import secure_filename
 from app.auth.utils import login_required
 from app.menus.models import Menu
-from app.menus.forms import BulkUploadForm
+from app.menus.forms import BulkUploadForm, MenuAdminForm
 from zipfile import ZipFile
 from tarfile import TarFile
 import os
@@ -42,3 +42,7 @@ def bulk_upload():
             pass
     return render_template('menus/upload.html', form=form)
 
+@menus.route('/menu_admin', methods=['GET', 'POST'])
+@login_required
+def menu_admin():
+    pass
