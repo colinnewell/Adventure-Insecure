@@ -1,2 +1,3 @@
 #!/bin/sh
-ldapsearch -x -h 172.21.0.2 -b 'dc=adventure,dc=org' '(objectclass=*)'
+IP=`docker inspect --format '{{ range .NetworkSettings.Networks}}{{ .IPAddress }}{{end}}' adventure_ldap_1`
+ldapsearch -x -h $IP -b 'dc=adventure,dc=org' '(objectclass=*)'
