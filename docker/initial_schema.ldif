@@ -6,3 +6,50 @@ dn: ou=Groups,dc=adventure,dc=org
 objectClass: organizationalUnit
 ou: Groups
 
+dn: ou=SUDOers,dc=adventure,dc=org
+objectClass: organizationalUnit
+objectClass: top
+ou: SUDOers
+
+dn: cn=defaults,ou=SUDOers,dc=adventure,dc=org
+objectClass: top
+objectClass: sudoRole
+cn: defaults
+description: Default sudoOption's go here
+sudoOption: env_reset
+sudoOption: env_keep+=SSH_AUTH_SOCK
+sudoOption: mail_badpass
+sudoOrder: 1
+
+dn: cn=root,ou=SUDOers,dc=adventure,dc=org
+objectClass: top
+objectClass: sudoRole
+cn: root
+sudoUser: root
+sudoHost: ALL
+sudoRunAsUser: ALL
+sudoRunAsGroup: ALL
+sudoCommand: ALL
+sudoOrder: 2
+
+dn: cn=%admin,ou=SUDOers,dc=adventure,dc=org
+objectClass: top
+objectClass: sudoRole
+cn: %admin
+sudoUser: %admin
+sudoHost: ALL
+sudoRunAsUser: ALL
+sudoCommand: ALL
+sudoOrder: 3
+
+dn: cn=%sudo,ou=SUDOers,dc=adventure,dc=org
+objectClass: top
+objectClass: sudoRole
+cn: %sudo
+sudoUser: %sudo
+sudoHost: ALL
+sudoRunAsUser: ALL
+sudoRunAsGroup: ALL
+sudoCommand: ALL
+sudoOrder: 4
+
