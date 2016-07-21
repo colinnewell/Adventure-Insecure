@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from ldap3 import Server, Connection, ALL
+from ldap3 import Server, Connection, ALL, MODIFY_ADD
 
 
 class LDAP:
@@ -42,13 +42,21 @@ class LDAP:
             'description': 'Test user',
         })
 
+    def add_user_to_group(self, username, group):
+        self.connection.modify('cn=%s,ou=Groups,%s' % (group, self.dn),
+                {
+                    'memberUid': [(MODIFY_ADD, [username])],
+                })
+
 
 server = Server('172.21.0.2')
 conn = Connection(server, user="cn=admin,dc=adventure,dc=org", password="notaverysecurepassword")
 conn.bind()
 ldap = LDAP(conn, 'dc=adventure,dc=org')
 
-ldap.add_group('developers', 5000)
+ldap.add_group('developer', 5000)
 ldap.add_user('dev1', 'Developer 1', '1', 'insecure', 5000, 10000)
-ldap.add_sudo_group('%developers')
+ldap.add_user_to_group('dev1', 'developer')
+ldap.add_sudo_group('%developer')
+ldap.add_sudo_group('dev1')
 
