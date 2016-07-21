@@ -16,7 +16,7 @@ COPY sudoers /etc/sudoers.d/access-role-developer
 
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN echo 'session    required    pam_mkhomedir.so skel=/etc/skel/ umask=0077' >> /etc/pam.d/common-session:
+RUN echo 'session    required    pam_mkhomedir.so skel=/etc/skel/ umask=0077' >> /etc/pam.d/common-session
 RUN echo '-:ALL EXCEPT root (login):ALL EXCEPT LOCAL' >> /etc/security/access.conf
 RUN echo "sudoers_base ou=SUDOers,dc=adventure,dc=org" >>/etc/ldap/ldap.conf
 RUN echo "BASE dc=adventure,dc=org" >>/etc/ldap/ldap.conf
