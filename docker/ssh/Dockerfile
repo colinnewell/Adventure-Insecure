@@ -22,10 +22,6 @@ RUN echo "sudoers_base ou=SUDOers,dc=adventure,dc=org" >>/etc/ldap/ldap.conf
 RUN echo "BASE dc=adventure,dc=org" >>/etc/ldap/ldap.conf
 RUN echo "URI  ldap://ldap/ " >>/etc/ldap/ldap.conf
 
-
-#ENV NOTVISIBLE "in users profile"
-#RUN echo "export VISIBLE=now" >> /etc/profile
-
 EXPOSE 22
 COPY entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
