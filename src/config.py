@@ -8,7 +8,7 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'j1etLfY9D6ioCeJsUyXfNLguvB04O4bj'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
-    DATABASE_URI = SQLALCHEMY_DATABASE_URI  # os.environ['DATABASE_URL']
+    DATABASE_URI = SQLALCHEMY_DATABASE_URI  # os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'filesystem'
     SESSION_FILE_DIR = '/tmp/sessions'
@@ -17,10 +17,10 @@ class Config(object):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = DATABASE_URI = os.environ['CONNECTION_STRING']
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI = os.environ.get('CONNECTION_STRING')
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'j1etLfY9D6ioCeJsUyXfNLguvB04O4bj'
-    SESSION_FILE_DIR = os.environ['SESSION_DIR']
-    UPLOAD_FOLDER = os.environ['UPLOAD_DIR']
+    SESSION_FILE_DIR = os.environ.get('SESSION_DIR')
+    UPLOAD_FOLDER = os.environ.get('UPLOAD_DIR')
     DEBUG = False
 
 

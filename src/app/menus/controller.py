@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for, abort
+    flash, session, redirect, url_for, abort, current_app
 from werkzeug import secure_filename
 from app.auth.utils import login_required
 from app.menus.models import Menu
@@ -25,18 +25,18 @@ def bulk_upload():
         if filename.endswith(".zip"):
             with ZipFile(file, mode='r') as z:
                 # FIXME: get path from config.
-                z.extractall('/tmp/upload')
+                z.extractall(current_app.config['UPLOAD_FOLDER'])
         # FIXME: allow zipped tarballs too.
         # .tgz, .tar.gz, .tar.bz2, tar.xz?
         elif filename.endswith(".tar"):
             # do a path combine
             # save this in a temporary path
             # and clean it up when we're done.
-            local_filename = os.path.join('/tmp/upload/', filename)
+            local_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
             file.save(local_filename)
             with TarFile.open(local_filename, mode='r') as t:
                 # FIXME: get path from config.
-                t.extractall('/tmp/upload')
+                t.extractall(current_app.config['UPLOAD_FOLDER'])
         else:
             # add a validation error.
             pass
