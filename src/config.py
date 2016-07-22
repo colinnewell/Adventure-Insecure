@@ -10,13 +10,17 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
     DATABASE_URI = SQLALCHEMY_DATABASE_URI  # os.environ['DATABASE_URL']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SESSION_FILE_DIR = '/tmp/sessions'
     SESSION_TYPE = 'filesystem'
+    SESSION_FILE_DIR = '/tmp/sessions'
     UPLOAD_FOLDER = '/tmp/upload'
 
 
 
 class ProductionConfig(Config):
+    SQLALCHEMY_DATABASE_URI = DATABASE_URI = os.environ['CONNECTION_STRING']
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'j1etLfY9D6ioCeJsUyXfNLguvB04O4bj'
+    SESSION_FILE_DIR = os.environ['SESSION_DIR']
+    UPLOAD_FOLDER = os.environ['UPLOAD_DIR']
     DEBUG = False
 
 
