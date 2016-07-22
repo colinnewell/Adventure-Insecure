@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form
+from flask_wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import Required, Email, EqualTo, Regexp
 from app.csrf import generate_csrf, validate_csrf

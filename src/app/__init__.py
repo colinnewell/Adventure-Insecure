@@ -1,7 +1,7 @@
 from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
-from flask.ext.session import Session
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
 from app.csrf import generate_csrf, validate_csrf
 import flask_wtf.csrf
 import os
