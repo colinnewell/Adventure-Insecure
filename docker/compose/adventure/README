@@ -1,0 +1,4 @@
+Creating the Postgres database,
+
+docker exec -it adventure_site_1 python /opt/adventure/manage.py db upgrade
+

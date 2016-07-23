@@ -2,7 +2,12 @@ version: '2'
 
 services:
 
-# FIXME: add a proper db server.
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: adventure
+      POSTGRES_PASSWORD: anothernotverysecurepassword
+
   ldap:
     image: adventure/ldap
     environment:
@@ -18,6 +23,11 @@ services:
 
   site:
     image: adventure/adventure
+    links:
+      - db
+      - ldap
+    environment:
+      CONNECTION_STRING: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
 
   nginx:
     image: adventure/nginx
