@@ -1,4 +1,11 @@
-Creating the Postgres database,
+This dockerfile links up with everything, this should mean that the DB is
+in Postgres and it's setup on launch.
 
-docker exec -it adventure_site_1 python /opt/adventure/manage.py db upgrade
+To have the nginx exposed on the docker servers port 80 make use of the
+open-ports.yml.
 
+    docker-compose -f docker-compose.yml -f open-ports.yml up -d
+
+To manually update the Postgres database,
+
+    docker exec -it adventure_site_1 python /opt/adventure/manage.py db upgrade
