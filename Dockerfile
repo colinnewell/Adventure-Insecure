@@ -15,6 +15,7 @@ ENV APP_SETTINGS config.ProductionConfig
 ENV CONNECTION_STRING sqlite:////var/lib/adventure/db/app.db
 ENV SESSION_DIR /var/lib/adventure/sessions
 ENV UPLOAD_DIR /var/lib/adventure/upload
+COPY entrypoint.sh /entrypoint.sh
 USER adventure
 RUN python /opt/adventure/manage.py db upgrade
-CMD uwsgi --uid adventure --ini /opt/adventure/uwsgi.ini
+CMD /entrypoint.sh
