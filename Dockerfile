@@ -6,12 +6,14 @@ COPY requirements.txt /opt/adventure/
 RUN pip install -r /opt/adventure/requirements.txt
 COPY src /opt/adventure/
 WORKDIR /opt/adventure/
-#RUN chown adventure.adventure /var/
 RUN mkdir -p /var/lib/adventure/db \
     mkdir -p /var/lib/adventure/upload \
     mkdir -p /var/lib/adventure/sessions \
     && chown -R adventure.adventure /var/lib/adventure
 ENV APP_SETTINGS config.ProductionConfig
+# NOTE: this sqlite db is setup so that the box can potentially
+# run standalone.
+# This can be overridden at run time.
 ENV CONNECTION_STRING sqlite:////var/lib/adventure/db/app.db
 ENV SESSION_DIR /var/lib/adventure/sessions
 ENV UPLOAD_DIR /var/lib/adventure/upload
