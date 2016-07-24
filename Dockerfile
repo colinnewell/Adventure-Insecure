@@ -19,6 +19,7 @@ ENV CONNECTION_STRING sqlite:////var/lib/adventure/db/app.db
 ENV SESSION_DIR /var/lib/adventure/sessions
 ENV UPLOAD_DIR /var/lib/adventure/upload
 ENV MENUS_DIR /var/lib/adventure/menus
+ENV LDAP_SERVER ldap
 COPY entrypoint.sh /entrypoint.sh
 USER adventure
 RUN python /opt/adventure/manage.py db upgrade

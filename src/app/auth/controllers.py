@@ -9,6 +9,7 @@ from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 from app import db
 from flask import current_app
 from datetime import datetime, timedelta
+from ldap3 import Server, Connection
 
 import logging
 
@@ -29,15 +30,27 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and check_password_hash(user.password, form.password.data):
-            session['user_id'] = user.id
-            flash('Welcome %s' % user.name)
-            rotate_session()
-            logging.debug("User %s logged in" % user.name)
-            return redirect(url_for('index'))
+        if user:
+            if user.ldap_auth:
+                ldap = current_app.ldap
+                dn = ldap.find_user_by_email(user.email)
+                if dn and ldap.check_password(dn, form.password.data):
+                    return successful_login(user)
+
+            elif check_password_hash(user.password, form.password.data):
+                return successful_login(user)
+
         flash('Incorrect email or password', 'error-message')
         logging.debug('Incorrect email or password')
     return render_template('auth/login.html', form=form)
+
+def successful_login(user):
+    session['user_id'] = user.id
+    flash('Welcome %s' % user.name)
+    rotate_session()
+    logging.debug("User %s logged in" % user.name)
+    return redirect(url_for('index'))
+
 
 @auth.route('/logout', methods=['POST'])
 def logout():
@@ -52,11 +65,19 @@ def signup():
     if form.validate_on_submit():
         email = form.email.data
         user = User.query.filter_by(email=email).first()
-        # FIXME: check email domain.
-        if user:
+        # lets see if the user is on ldap
+        ldap_user = current_app.ldap.user_info_by_email(email, ['displayName'])
+        # ['displayName']
+        if ldap_user:
+            name = ldap_user['attributes']['displayName'][0]
+            u = User(name, email, '*****', ldap_auth=True)
+            db.session.add(u)
+            db.session.commit()
+            flash('User account setup, login with your LDAP password', 'message')
+            return redirect(url_for('auth.login'))
+        elif user:
             # if the user is found send them a password reset email
-            session['user_id'] = user.id
-            flash('Welcome %s' % user.name)
+            pass
         else:
             # FIXME: check for existing attempts.
             attempt = SignupAttempt.AttemptFor(email)
