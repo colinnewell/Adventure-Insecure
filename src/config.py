@@ -13,6 +13,7 @@ class Config(object):
     SESSION_TYPE = 'filesystem'
     SESSION_FILE_DIR = '/tmp/sessions'
     UPLOAD_FOLDER = '/tmp/upload'
+    BOOTSTRAP_SERVE_LOCAL = True
 
 
 
