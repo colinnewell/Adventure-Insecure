@@ -15,11 +15,11 @@ Work from the src directory,
 
 ### General dev.
 
-    DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python run.py
+    APP_SETTINGS=config.DevelopmentConfig python run.py
 
 #### Tests
 
-    DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python -m unittest
+    APP_SETTINGS=config.DevelopmentConfig python -m unittest
 
 ### DB Management
 
@@ -27,10 +27,10 @@ Work from the src directory,
 
 To create or update the database to the latest version run the upgrade command.
 
-    DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python manage.py db upgrade
+    APP_SETTINGS=config.DevelopmentConfig python manage.py db upgrade
 
 #### DB changes
 
 To create a migration file for database changes run the migrate command.
 
-    DATABASE_URL=fixme APP_SETTINGS=config.DevelopmentConfig python manage.py db migrate
+    APP_SETTINGS=config.DevelopmentConfig python manage.py db migrate

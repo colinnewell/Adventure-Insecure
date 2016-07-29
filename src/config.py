@@ -8,7 +8,7 @@ class Config(object):
     CSRF_ENABLED = True
     SECRET_KEY = 'j1etLfY9D6ioCeJsUyXfNLguvB04O4bj'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
-    DATABASE_URI = SQLALCHEMY_DATABASE_URI  # os.environ.get('DATABASE_URL')
+    DATABASE_URI = SQLALCHEMY_DATABASE_URI
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SESSION_TYPE = 'filesystem'
     SESSION_FILE_DIR = '/tmp/sessions'
