@@ -7,6 +7,8 @@ from app.menus.forms import BulkUploadForm, MenuAdminForm
 from zipfile import ZipFile
 from tarfile import TarFile
 import os
+import magic
+
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
 
@@ -40,6 +42,25 @@ def bulk_upload():
         else:
             # add a validation error.
             pass
+
+        # check for new files, are they pdf's?
+        for root, dirs, files in os.walk(current_app.config['UPLOAD_FOLDER']):
+            for name in files:
+                fullname = os.path.join(root, name)
+                info = magic.from_file(fullname)
+                if 'PDF' in info:
+                    # lets do something
+                    # move the file
+                    # create a Menu object.
+                    print("Use " + fullname)
+                    pass
+                else:
+                    print("Whine about " + fullname)
+                    pass
+                    # reject the file.
+                # can we see pdf's
+                # move them to a special directory within static.
+
     return render_template('menus/upload.html', form=form)
 
 @menus.route('/menu_admin', methods=['GET', 'POST'])

@@ -8,3 +8,4 @@ Flask-Bootstrap
 Flask-Session
 uwsgi
 ldap3
+python-magic
