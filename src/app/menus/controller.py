@@ -1,5 +1,6 @@
 from flask import Blueprint, request, render_template, \
     flash, session, redirect, url_for, abort, current_app
+from flask.helpers import send_from_directory
 from werkzeug import secure_filename
 from app.auth.utils import login_required
 from app.menus.models import Menu
@@ -8,6 +9,7 @@ from zipfile import ZipFile
 from tarfile import TarFile
 import os
 import magic
+from shutil import move
 
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
@@ -53,15 +55,24 @@ def bulk_upload():
                     # move the file
                     # create a Menu object.
                     print("Use " + fullname)
-                    pass
+                    move(fullname, current_app.config['MENUS_FOLDER'])
+                    # FIXME: create a menu object.
                 else:
                     print("Whine about " + fullname)
-                    pass
                     # reject the file.
                 # can we see pdf's
                 # move them to a special directory within static.
 
     return render_template('menus/upload.html', form=form)
+
+
+
+@menus.route('/menu/<path:filename>', methods=['GET'])
+@login_required
+def menu(filename):
+    return send_from_directory(current_app.config['MENUS_FOLDER'],
+                               filename, as_attachment=False)
+
 
 @menus.route('/menu_admin', methods=['GET', 'POST'])
 @login_required

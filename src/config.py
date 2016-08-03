@@ -14,6 +14,9 @@ class Config(object):
     SESSION_FILE_DIR = '/tmp/sessions'
     UPLOAD_FOLDER = '/tmp/upload'
     BOOTSTRAP_SERVE_LOCAL = True
+    # NOTE: we could shift this by tweaking the Flask
+    # constructor.
+    MENUS_FOLDER = os.path.join(BASE_DIR, 'static', 'menus')
 
 
 

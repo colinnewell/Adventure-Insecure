@@ -9,7 +9,9 @@ WORKDIR /opt/adventure/
 RUN mkdir -p /var/lib/adventure/db \
     mkdir -p /var/lib/adventure/upload \
     mkdir -p /var/lib/adventure/sessions \
+    mkdir -p /opt/adventure/static/menus \
     && chown -R adventure.adventure /var/lib/adventure
+    && chown -R adventure.adventure /opt/adventure/static/menus
 ENV APP_SETTINGS config.ProductionConfig
 # NOTE: this sqlite db is setup so that the box can potentially
 # run standalone.
