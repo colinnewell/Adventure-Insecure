@@ -14,9 +14,7 @@ class Config(object):
     SESSION_FILE_DIR = '/tmp/sessions'
     UPLOAD_FOLDER = '/tmp/upload'
     BOOTSTRAP_SERVE_LOCAL = True
-    # NOTE: we could shift this by tweaking the Flask
-    # constructor.
-    MENUS_FOLDER = os.path.join(BASE_DIR, 'static', 'menus')
+    MENUS_FOLDER = os.path.join('/tmp', 'menus')
 
 
 
@@ -25,6 +23,7 @@ class ProductionConfig(Config):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'j1etLfY9D6ioCeJsUyXfNLguvB04O4bj'
     SESSION_FILE_DIR = os.environ.get('SESSION_DIR')
     UPLOAD_FOLDER = os.environ.get('UPLOAD_DIR')
+    MENUS_FOLDER = os.environ.get('MENUS_DIR')
     DEBUG = False
 
 

@@ -9,9 +9,8 @@ WORKDIR /opt/adventure/
 RUN mkdir -p /var/lib/adventure/db \
     mkdir -p /var/lib/adventure/upload \
     mkdir -p /var/lib/adventure/sessions \
-    mkdir -p /opt/adventure/static/menus \
+    mkdir -p /var/lib/adventure/menus \
     && chown -R adventure.adventure /var/lib/adventure
-    && chown -R adventure.adventure /opt/adventure/static/menus
 ENV APP_SETTINGS config.ProductionConfig
 # NOTE: this sqlite db is setup so that the box can potentially
 # run standalone.
@@ -19,6 +18,7 @@ ENV APP_SETTINGS config.ProductionConfig
 ENV CONNECTION_STRING sqlite:////var/lib/adventure/db/app.db
 ENV SESSION_DIR /var/lib/adventure/sessions
 ENV UPLOAD_DIR /var/lib/adventure/upload
+ENV MENUS_DIR /var/lib/adventure/menus
 COPY entrypoint.sh /entrypoint.sh
 USER adventure
 RUN python /opt/adventure/manage.py db upgrade

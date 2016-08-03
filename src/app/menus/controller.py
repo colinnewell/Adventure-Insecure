@@ -1,6 +1,7 @@
 from flask import Blueprint, request, render_template, \
     flash, session, redirect, url_for, abort, current_app
 from flask.helpers import send_from_directory
+from app import db
 from werkzeug import secure_filename
 from app.auth.utils import login_required
 from app.menus.models import Menu
@@ -9,7 +10,7 @@ from zipfile import ZipFile
 from tarfile import TarFile
 import os
 import magic
-from shutil import move
+import shutil
 
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
@@ -55,13 +56,21 @@ def bulk_upload():
                     # move the file
                     # create a Menu object.
                     print("Use " + fullname)
-                    move(fullname, current_app.config['MENUS_FOLDER'])
-                    # FIXME: create a menu object.
+                    try:
+                        shutil.move(fullname, current_app.config['MENUS_FOLDER'])
+                        m = Menu(name, name, session['user_id'])
+                        db.session.add(m)
+                        db.session.commit()
+                    except shutil.Error:
+                        print("Fail")
+                        pass
+                        # FIXME: do something.
                 else:
                     print("Whine about " + fullname)
                     # reject the file.
                 # can we see pdf's
                 # move them to a special directory within static.
+        # now redirect them to somewhere to edit the entries.
 
     return render_template('menus/upload.html', form=form)
 
