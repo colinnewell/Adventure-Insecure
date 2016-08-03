@@ -1,0 +1,17 @@
+{% extends "wrapper.html" %}
+{% block title %}Menu Admin{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Upload Menus</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+<!-- FIXME: this needs doing by hand -->
+{{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
+

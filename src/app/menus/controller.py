@@ -78,7 +78,7 @@ def bulk_upload():
                     pass
         if len(added) > 0:
             # redirect to general admin
-            pass
+            return redirect(url_for('menus.menu_admin'))
         else:
             flash("Failed to upload any files. " + ", ".join(errors), "error-message")
 
@@ -93,7 +93,16 @@ def menu(filename):
                                filename, as_attachment=False)
 
 
+class MenuList:
+    def __init__(self, menus):
+        self.menus = menus
+
 @menus.route('/menu_admin', methods=['GET', 'POST'])
 @login_required
 def menu_admin():
-    pass
+    menus = MenuList(Menu.query.all())
+    form = MenuAdminForm(request.form, obj=menus)
+    # load up the menu objects.
+    if form.validate_on_submit():
+        pass
+    return render_template('menus/menu_admin.html', form=form)
