@@ -27,6 +27,8 @@ def bulk_upload():
     if form.validate_on_submit() and 'menu' in request.files:
         file = request.files['menu']
         filename = secure_filename(file.filename)
+        errors = []
+        added = []
         if filename.endswith(".zip"):
             with ZipFile(file, mode='r') as z:
                 # FIXME: get path from config.
@@ -43,8 +45,7 @@ def bulk_upload():
                 # FIXME: get path from config.
                 t.extractall(current_app.config['UPLOAD_FOLDER'])
         else:
-            # add a validation error.
-            pass
+            errors.append("Please upload a zip file or a tar file.")
 
         # check for new files, are they pdf's?
         for root, dirs, files in os.walk(current_app.config['UPLOAD_FOLDER']):
@@ -55,22 +56,31 @@ def bulk_upload():
                     # lets do something
                     # move the file
                     # create a Menu object.
-                    print("Use " + fullname)
                     try:
                         shutil.move(fullname, current_app.config['MENUS_FOLDER'])
                         m = Menu(name, name, session['user_id'])
                         db.session.add(m)
                         db.session.commit()
-                    except shutil.Error:
-                        print("Fail")
-                        pass
+                        added.append(m)
+                    except shutil.Error as e:
+                        errors.append("Unable to add {0}: {1}".format(name, e))
                         # FIXME: do something.
+                    except:
+                        print("Unexpected exception")
+                        raise
                 else:
-                    print("Whine about " + fullname)
-                    # reject the file.
-                # can we see pdf's
-                # move them to a special directory within static.
-        # now redirect them to somewhere to edit the entries.
+                    errors.append("Rejected {0} because it's not a PDF".format(name))
+
+                try:
+                    # it might not still be there, being really lazy here.
+                    os.remove(fullname)
+                except:
+                    pass
+        if len(added) > 0:
+            # redirect to general admin
+            pass
+        else:
+            flash("Failed to upload any files. " + ", ".join(errors), "error-message")
 
     return render_template('menus/upload.html', form=form)
 
