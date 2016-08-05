@@ -36,26 +36,32 @@ def bulk_upload():
         filename = secure_filename(file.filename)
         errors = []
         added = []
+        upload_folder = current_app.config['UPLOAD_FOLDER']
+        # FIXME: should ensure we can deal with filenames
+        # case insensitively.
         if filename.endswith(".zip"):
             with ZipFile(file, mode='r') as z:
                 # FIXME: get path from config.
-                z.extractall(current_app.config['UPLOAD_FOLDER'])
+                z.extractall(upload_folder)
         # FIXME: allow zipped tarballs too.
         # .tgz, .tar.gz, .tar.bz2, tar.xz?
         elif filename.endswith(".tar"):
             # do a path combine
             # save this in a temporary path
             # and clean it up when we're done.
-            local_filename = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+            local_filename = os.path.join(upload_folder, filename)
             file.save(local_filename)
             with TarFile.open(local_filename, mode='r') as t:
                 # FIXME: get path from config.
-                t.extractall(current_app.config['UPLOAD_FOLDER'])
+                t.extractall(upload_folder)
+        elif filename.endswith(".pdf"):
+            local_filename = os.path.join(upload_folder, filename)
+            file.save(local_filename)
         else:
             errors.append("Please upload a zip file or a tar file.")
 
         # check for new files, are they pdf's?
-        for root, dirs, files in os.walk(current_app.config['UPLOAD_FOLDER']):
+        for root, dirs, files in os.walk(upload_folder):
             for name in files:
                 fullname = os.path.join(root, name)
                 info = magic.from_file(fullname)
