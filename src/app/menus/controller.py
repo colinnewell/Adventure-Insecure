@@ -117,5 +117,9 @@ def menu_admin():
     form = MenuAdminForm(request.form, obj=menus)
     # load up the menu objects.
     if form.validate_on_submit():
-        pass
+        fields = form.menus
+        for menu in fields.entries:
+            text = menu.link_text.data
+            menu.object_data.link_text = text
+        db.session.commit()
     return render_template('menus/menu_admin.html', form=form)

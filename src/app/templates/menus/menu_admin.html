@@ -9,8 +9,27 @@
 
 <div class="container">
 {{ utils.flashed_messages() }}
-<!-- FIXME: this needs doing by hand -->
-{{ wtf.quick_form(form) }}
+<form method="POST" class="form">
+  {{ form.hidden_tag() }}
+  {{ wtf.form_errors(form, hiddens='only') }}
+
+  {%- for field in form %}
+    {% if not bootstrap_is_hidden_field(field) -%}
+    {% if field.type == 'FieldList' %}
+      {%- for field in field.entries %}
+          {{ wtf.form_field(field,
+                form_type='basic',
+            ) }}
+      {%- endfor %}
+    {% else %}
+      {{ wtf.form_field(field,
+                    form_type='basic',
+                    ) }}
+    {%- endif %}
+    {%- endif %}
+  {%- endfor %}
+
+</form>
 </div>
 {% endblock %}
 
