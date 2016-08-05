@@ -15,6 +15,13 @@ import shutil
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
 
+@menus.route('/', methods=['GET'])
+@login_required
+def index():
+    # FIXME: should order them
+    menus = Menu.query.all()
+    return render_template('menus/index.html', menus=menus)
+
 
 # FIXME: create a regular upload too.
 

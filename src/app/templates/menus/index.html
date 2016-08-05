@@ -1,0 +1,25 @@
+{% extends "wrapper.html" %}
+{% block title %}Menu Admin{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Menus</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+    {% if menus|length > 0 %}
+    <ul>
+        {% for menu in menus %}
+        <li><a href="{{ url_for('menus.menu', filename=menu.filename) }}">{{ menu.link_text }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No menus have been uploaded yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
