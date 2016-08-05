@@ -23,13 +23,11 @@ def index():
     return render_template('menus/index.html', menus=menus)
 
 
-# FIXME: create a regular upload too.
-
 # FIXME: ensure they are logged in,
 # heck, we should make sure they are an admin.
-@menus.route('/bulk_upload', methods=['GET', 'POST'])
+@menus.route('/upload', methods=['GET', 'POST'])
 @login_required
-def bulk_upload():
+def upload():
     form = BulkUploadForm(request.form)
     if form.validate_on_submit() and 'menu' in request.files:
         file = request.files['menu']
@@ -37,15 +35,13 @@ def bulk_upload():
         errors = []
         added = []
         upload_folder = current_app.config['UPLOAD_FOLDER']
-        # FIXME: should ensure we can deal with filenames
-        # case insensitively.
-        if filename.endswith(".zip"):
+        if filename.lower().endswith(".zip"):
             with ZipFile(file, mode='r') as z:
                 # FIXME: get path from config.
                 z.extractall(upload_folder)
         # FIXME: allow zipped tarballs too.
         # .tgz, .tar.gz, .tar.bz2, tar.xz?
-        elif filename.endswith(".tar"):
+        elif filename.lower().endswith(".tar"):
             # do a path combine
             # save this in a temporary path
             # and clean it up when we're done.
@@ -54,11 +50,11 @@ def bulk_upload():
             with TarFile.open(local_filename, mode='r') as t:
                 # FIXME: get path from config.
                 t.extractall(upload_folder)
-        elif filename.endswith(".pdf"):
+        elif filename.lower().endswith(".pdf"):
             local_filename = os.path.join(upload_folder, filename)
             file.save(local_filename)
         else:
-            errors.append("Please upload a zip file or a tar file.")
+            errors.append("Please upload a pdf, zip or tar file.")
 
         # check for new files, are they pdf's?
         for root, dirs, files in os.walk(upload_folder):
