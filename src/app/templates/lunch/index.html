@@ -1,0 +1,37 @@
+{% extends "wrapper.html" %}
+{% block title %}Menu Admin{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Orders</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+    {% if orders|length > 0 %}
+    <table>
+        <thead>
+            <tr>
+                <th>Order</th>
+                <th>For</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.order }}</td>
+                <td>{{ order.order_for.name }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No orders have been placed yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
