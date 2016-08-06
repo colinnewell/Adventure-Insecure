@@ -59,6 +59,7 @@ def upload():
         # check for new files, are they pdf's?
         for root, dirs, files in os.walk(upload_folder):
             for name in files:
+                # FIXME: check file extension too.
                 fullname = os.path.join(root, name)
                 info = magic.from_file(fullname)
                 if 'PDF' in info:
@@ -111,11 +112,17 @@ class MenuList:
 def menu_admin():
     menus = MenuList(Menu.query.all())
     form = MenuAdminForm(request.form, obj=menus)
-    # load up the menu objects.
     if form.validate_on_submit():
         fields = form.menus
         for menu in fields.entries:
-            text = menu.link_text.data
-            menu.object_data.link_text = text
+            if menu.delete:
+                menu_folder = current_app.config['MENUS_FOLDER']
+                fullname = os.path.join(menu_folder, menu.filename.data)
+                db.session.delete(menu.object_data)
+                os.remove(fullname)
+            else:
+                text = menu.link_text.data
+                menu.object_data.link_text = text
         db.session.commit()
+        return redirect(request.path)
     return render_template('menus/menu_admin.html', form=form)
