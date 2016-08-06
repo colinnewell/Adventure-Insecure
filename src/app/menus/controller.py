@@ -62,7 +62,7 @@ def upload():
                 # FIXME: check file extension too.
                 fullname = os.path.join(root, name)
                 info = magic.from_file(fullname)
-                if 'PDF' in info:
+                if 'PDF' in info and fullname.lower().endswith('.pdf'):
                     # lets do something
                     # move the file
                     # create a Menu object.
@@ -115,7 +115,7 @@ def menu_admin():
     if form.validate_on_submit():
         fields = form.menus
         for menu in fields.entries:
-            if menu.delete:
+            if menu.delete.data:
                 menu_folder = current_app.config['MENUS_FOLDER']
                 fullname = os.path.join(menu_folder, menu.filename.data)
                 db.session.delete(menu.object_data)
