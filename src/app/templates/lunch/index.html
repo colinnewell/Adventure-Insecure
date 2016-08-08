@@ -21,7 +21,7 @@
         {% for order in orders %}
             <tr>
                 <td>{{ order.order }}</td>
-                <td>{{ order.order_for.name }}</td>
+                <td>{{ order.user.name }}</td>
             </tr>
         {% endfor %}
         </tbody>

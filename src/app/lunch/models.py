@@ -6,9 +6,10 @@ from sqlalchemy.orm import relationship
 
 class Order(Base):
 
-    __tablename__ = 'order'
+    __tablename__ = 'order_header'
 
     title = db.Column(db.Text, nullable=False)
+    lines = relationship("OrderLine", back_populates="order")
 
     def __init__(self, title):
         self.title = title
@@ -16,17 +17,19 @@ class Order(Base):
     def __repr__(self):
         return "<Order %s - %s>" % (self.title)
 
+
 class OrderLine(Base):
 
-    __tablename__ = 'lunch_order'
+    __tablename__ = 'order_line'
 
-    order = db.Column(db.Text, nullable=False)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id', name="order_id_fkey"))
+    request = db.Column(db.Text, nullable=False)
+    order_id = db.Column(db.Integer, db.ForeignKey('order_header.id', name="order_id_fkey"))
     order_for = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    header = relationship("Order", foreign_keys=[order_id])
+    order = relationship("Order", foreign_keys=[order_id], back_populates="lines")
+    user = relationship("User")
 
-    def __init__(self, order_id, order, order_for):
+    def __init__(self, order_id, o_headerrder, order_for):
 
         self.order = order
         self.order_for = order_for
