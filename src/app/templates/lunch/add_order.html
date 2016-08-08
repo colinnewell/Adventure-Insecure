@@ -1,0 +1,19 @@
+{% extends "wrapper.html" %}
+{% block title %}Create Order{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Create Order</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+{{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
+
+
+
+

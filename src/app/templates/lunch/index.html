@@ -1,5 +1,5 @@
 {% extends "wrapper.html" %}
-{% block title %}Menu Admin{% endblock %}
+{% block title %}Lunch Orders{% endblock %}
 {% block content %}
 <div class="jumbotron">
   <div class="container">
@@ -10,18 +10,16 @@
 <div class="container">
 {{ utils.flashed_messages() }}
     {% if orders|length > 0 %}
-    <table>
+    <table class="datatable">
         <thead>
             <tr>
                 <th>Order</th>
-                <th>For</th>
             </tr>
         </thead>
         <tbody>
         {% for order in orders %}
             <tr>
-                <td>{{ order.order }}</td>
-                <td>{{ order.user.name }}</td>
+                <td>{{ order.title }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -29,9 +27,6 @@
     {% else %}
     <p>No orders have been placed yet.</p>
     {% endif %}
+    <a class="btn btn-default" href="{{ url_for('lunch.add_order') }}">Add</a>
 </div>
 {% endblock %}
-
-
-
-

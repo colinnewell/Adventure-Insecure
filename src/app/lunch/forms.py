@@ -3,7 +3,12 @@ from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField
 from app.auth.forms import OwnCSRF
 
 
-class Order(OwnCSRF, Form):
-    order = StringField('Order')
+class OrderForm(OwnCSRF, Form):
+    title = StringField('Order')
+    submit = SubmitField('Add')
+
+
+class OrderLineForm(OwnCSRF, Form):
+    request = StringField('Request')
     submit = SubmitField('Add')
 
