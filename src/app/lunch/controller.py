@@ -13,7 +13,8 @@ lunch = Blueprint('lunch', __name__, url_prefix='/lunch')
 @login_required
 def index():
     # FIXME: should order them
-    orders = Order.query.filter_by(date_created=func.date_trunc('day', func.now())).all()
+    # func.date_trunc('day', Order.date_created)=func.date_trunc('day', func.now())
+    orders = Order.query.filter(text("date_trunc('day', date_created)=date_trunc('day', now())")).all()
     return render_template('lunch/index.html', orders=orders)
 
 @lunch.route('/add_order', methods=['GET', 'POST'])
