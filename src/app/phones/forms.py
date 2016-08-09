@@ -10,5 +10,5 @@ class SearchForm(OwnCSRF, Form):
     submit = SubmitField('Search')
 
     def is_submitted(self):
-        return request and request.method == 'GET'
+        return request and request.method == 'GET' and 'submit' in request.args
 
