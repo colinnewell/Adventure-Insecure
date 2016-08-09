@@ -24,7 +24,7 @@ def search():
         phone = form.phone_number.data
         # FIXME: should probably order this so that we can
         # allow for more complex scenarios.
-        office = OfficeNumber.query.filter(text("'%s' like '%%' || number_prefix" % phone)).first()
+        office = OfficeNumber.query.filter(text("'%s' like number_prefix || '%%'" % phone)).first()
         if office:
             result['company'] = office
 

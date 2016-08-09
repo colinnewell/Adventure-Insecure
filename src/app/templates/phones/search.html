@@ -15,7 +15,7 @@
 {% if result.set %}
 <br>
 {% if result.company %}
-<p>The call was from {{ result.company }}.</p>
+<p>The call was from {{ result.company.name }}, main number {{ result.company.main_number }}.</p>
 {% else %}
 <p><strong>This number was not recognised</strong></p>.
 {% endif %}

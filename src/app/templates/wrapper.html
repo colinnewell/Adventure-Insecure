@@ -19,6 +19,7 @@
 		  <ul class="nav navbar-nav">
             <li><a href="{{ url_for('lunch.index') }}">Order</a></li>
             <li><a href="{{ url_for('menus.index') }}">Menus</a></li>
+            <li><a href="{{ url_for('phones.search') }}">Phones</a></li>
             {% if user.admin %}
 			<li class="dropdown">
 			  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
