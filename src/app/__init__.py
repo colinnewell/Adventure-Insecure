@@ -29,6 +29,8 @@ from app.menus.controller import menus
 app.register_blueprint(menus)
 from app.lunch.controller import lunch
 app.register_blueprint(lunch)
+from app.phones.controller import phones
+app.register_blueprint(phones)
 
 
 @app.route('/')
