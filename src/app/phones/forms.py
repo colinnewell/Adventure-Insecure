@@ -1,12 +1,13 @@
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField, HiddenField
+from wtforms.validators import Required
 from app.auth.forms import OwnCSRF
 from flask import request
 
 
 class SearchForm(OwnCSRF, Form):
 
-    phone_number = StringField('Phone Number') # FIXME: make it requried
+    phone_number = StringField('Phone Number', [Required(message='Specify a number to look up')])
     submit = SubmitField('Search')
 
     def is_submitted(self):
