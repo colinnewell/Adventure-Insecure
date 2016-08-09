@@ -33,3 +33,16 @@ def add_order():
         db.session.commit()
         return redirect(url_for('lunch.index'))
     return render_template('lunch/add_order.html', form=form)
+
+@lunch.route('/order/<int:order_id>', methods=['GET', 'POST'])
+@login_required
+def order(order_id):
+    order = Order.query.filter_by(id=order_id).one()
+    form = OrderLineForm(request.form)
+    if form.validate_on_submit():
+        r = form.request.data
+        l = OrderLine(order_id, r, session['user_id'])
+        db.session.add(l)
+        db.session.commit()
+        return redirect(request.url)
+    return render_template('lunch/order.html', form=form, order=order)

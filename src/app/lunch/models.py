@@ -29,9 +29,9 @@ class OrderLine(Base):
     order = relationship("Order", foreign_keys=[order_id], back_populates="lines")
     user = relationship("User")
 
-    def __init__(self, order_id, o_headerrder, order_for):
+    def __init__(self, order_id, request, order_for):
 
-        self.order = order
+        self.request = request
         self.order_for = order_for
         self.order_id = order_id
 

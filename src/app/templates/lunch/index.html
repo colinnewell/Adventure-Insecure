@@ -10,16 +10,18 @@
 <div class="container">
 {{ utils.flashed_messages() }}
     {% if orders|length > 0 %}
-    <table class="datatable">
+    <table class="datatable table table-hover">
         <thead>
             <tr>
                 <th>Order</th>
+                <th>People Ordering</th>
             </tr>
         </thead>
         <tbody>
         {% for order in orders %}
             <tr>
-                <td>{{ order.title }}</td>
+                <td><a href="{{ url_for('lunch.order', order_id=order.id) }}">{{ order.title }}</a></td>
+                <td>{{ order.lines|length }}</td>
             </tr>
         {% endfor %}
         </tbody>

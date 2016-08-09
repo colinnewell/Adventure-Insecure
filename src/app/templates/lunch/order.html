@@ -1,0 +1,38 @@
+{% extends "wrapper.html" %}
+{% block title %}Order {{ order.title }}{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Order {{ order.title }}</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+{% set my_order_already_placed = [] %}
+{% if order.lines|length > 0 %}
+<table class="datatable table table-hover">
+    <thead>
+        <tr>
+            <th>Request</th>
+            <th>Person</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for line in order.lines %}
+        {% set my_line = line.order_for == session['user_id'] %}
+        {% if my_line and my_order_already_placed.append(1) %}
+        {% endif %}
+        <tr{% if my_line %} class="info"{% endif %}>
+            <td>{{ line.request }}</td>
+            <td>{{ line.user.name }} ({{ line.user.email }})</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% if my_order_already_placed|length == 0 %}
+{{ wtf.quick_form(form) }}
+{% endif %}
+</div>
+{% endblock %}
