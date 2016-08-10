@@ -119,7 +119,13 @@ def menu_admin():
                 menu_folder = current_app.config['MENUS_FOLDER']
                 fullname = os.path.join(menu_folder, menu.filename.data)
                 db.session.delete(menu.object_data)
-                os.remove(fullname)
+                try:
+                    os.remove(fullname)
+                except:
+                    # perhaps log this,
+                    # but this shouldn't prevent the item from being deleted
+                    # from the database.
+                    pass
             else:
                 text = menu.link_text.data
                 menu.object_data.link_text = text
