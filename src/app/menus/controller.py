@@ -3,7 +3,7 @@ from flask import Blueprint, request, render_template, \
 from flask.helpers import send_from_directory
 from app import db
 from werkzeug import secure_filename
-from app.auth.utils import login_required
+from app.auth.utils import login_required, admin_required
 from app.menus.models import Menu
 from app.menus.forms import BulkUploadForm, MenuAdminForm
 from zipfile import ZipFile
@@ -26,7 +26,7 @@ def index():
 # FIXME: ensure they are logged in,
 # heck, we should make sure they are an admin.
 @menus.route('/upload', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def upload():
     form = BulkUploadForm(request.form)
     if form.validate_on_submit() and 'menu' in request.files:
@@ -108,7 +108,7 @@ class MenuList:
         self.menus = menus
 
 @menus.route('/menu_admin', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def menu_admin():
     menus = MenuList(Menu.query.all())
     form = MenuAdminForm(request.form, obj=menus)
