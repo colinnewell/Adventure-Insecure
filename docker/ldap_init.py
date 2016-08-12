@@ -1,4 +1,15 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+"""ldap_init.py
+Usage:
+    ldap_ini.py <server>
+    ldap_ini.py (-h | --help | --version)
+Options:
+    -h, --help            Show this screen and exit.
+
+Provide the hostname of the ldap server to populate with the
+demo users.
+"""
+from docopt import docopt
 from ldap3 import Server, Connection, ALL, MODIFY_ADD
 from ldap3.utils.dn import escape_attribute_value
 import string
@@ -55,14 +66,16 @@ class LDAP:
                 })
 
 
-server = Server('172.23.0.3')
-conn = Connection(server, user="cn=admin,dc=adventure,dc=org", password="notaverysecurepassword")
-conn.bind()
-ldap = LDAP(conn, 'dc=adventure,dc=org')
+if __name__ == '__main__':
+    arguments = docopt(__doc__, version='ldap_init.py 0.1')
+    server = Server(arguments['<server>'])
+    conn = Connection(server, user="cn=admin,dc=adventure,dc=org", password="notaverysecurepassword")
+    conn.bind()
+    ldap = LDAP(conn, 'dc=adventure,dc=org')
 
-ldap.add_group('developer', 5000)
-ldap.add_user('dev1', 'Developer 1', '1', 'insecure', 5000, 10000)
-ldap.add_user_to_group('dev1', 'developer')
-ldap.add_sudo_group('%developer')
-ldap.add_sudo_group('dev1')
+    ldap.add_group('developer', 5000)
+    ldap.add_user('dev1', 'Developer 1', '1', 'insecure', 5000, 10000)
+    ldap.add_user_to_group('dev1', 'developer')
+    ldap.add_sudo_group('%developer')
+    ldap.add_sudo_group('dev1')
 

@@ -9,3 +9,4 @@ Flask-Session
 uwsgi
 ldap3
 python-magic
+docopt

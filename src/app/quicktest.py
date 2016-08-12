@@ -14,7 +14,7 @@ from ldap3 import Server, Connection
 
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__, version='CouchDB Upload 0.1')
+    arguments = docopt(__doc__, version='Quicktest 0.1')
     server = arguments['<host>']
     l = LDAP(Server(server), 'dc=adventure,dc=org') 
     if arguments['search']:

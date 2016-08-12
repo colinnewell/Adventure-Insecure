@@ -5,3 +5,4 @@ ldapadd -x -h $IP -D cn=admin,dc=adventure,dc=org -w notaverysecurepassword -f i
 echo installed posix schemas.
 echo ldapsearch -x -h $IP -b dc=adventure,dc=org -D "cn=admin,dc=adventure,dc=org" -w devpassword
 ldapsearch -x -h $IP -b dc=adventure,dc=org -D "cn=admin,dc=adventure,dc=org" -w notaverysecurepassword
+python ldap_init.py $IP
