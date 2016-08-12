@@ -31,21 +31,23 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
+            password = form.password.data
             if user.ldap_auth:
                 ldap = current_app.ldap
                 dn = ldap.find_user_by_email(user.email)
-                if dn and ldap.check_password(dn, form.password.data):
-                    return successful_login(user)
+                if dn and ldap.check_password(dn, password):
+                    return successful_login(user, password)
 
-            elif check_password_hash(user.password, form.password.data):
-                return successful_login(user)
+            elif check_password_hash(user.password, password):
+                return successful_login(user, password)
 
         flash('Incorrect email or password', 'error-message')
         logging.debug('Incorrect email or password')
     return render_template('auth/login.html', form=form)
 
-def successful_login(user):
+def successful_login(user, password):
     session['user_id'] = user.id
+    session['password'] = password
     flash('Welcome %s' % user.name)
     rotate_session()
     logging.debug("User %s logged in" % user.name)

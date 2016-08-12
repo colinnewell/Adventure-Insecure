@@ -36,6 +36,8 @@ from app.lunch.controller import lunch
 app.register_blueprint(lunch)
 from app.phones.controller import phones
 app.register_blueprint(phones)
+from app.nginx.controller import nginx
+app.register_blueprint(nginx)
 
 
 @app.route('/')

@@ -1,0 +1,16 @@
+{% extends "wrapper.html" %}
+{% block title %}Clear nginx cache{% endblock %}
+{% block content %}
+<div class="jumbotron">
+  <div class="container">
+    <h1>Clear nginx cache</h1>
+  </div>
+</div>
+
+<div class="container">
+{{ utils.flashed_messages() }}
+<p>Are you sure you want to clear the nginx cache?</p>
+{{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
+
