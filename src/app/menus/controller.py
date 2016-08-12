@@ -16,7 +16,6 @@ import shutil
 menus = Blueprint('menus', __name__, url_prefix='/menus')
 
 @menus.route('/', methods=['GET'])
-@login_required
 def index():
     # FIXME: should order them
     menus = Menu.query.all()
@@ -97,7 +96,6 @@ def upload():
 
 
 @menus.route('/menu/<path:filename>', methods=['GET'])
-@login_required
 def menu(filename):
     return send_from_directory(current_app.config['MENUS_FOLDER'],
                                filename, as_attachment=False)
