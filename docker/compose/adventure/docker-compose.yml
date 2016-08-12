@@ -15,12 +15,6 @@ services:
       LDAP_ORGANISATION: Adventure
       LDAP_ADMIN_PASSWORD: notaverysecurepassword
 
-  # create volumes to link ssh and nginx up.
-  ssh:
-    image: adventure/sshd
-    links:
-      - ldap
-
   site:
     image: adventure/adventure
     links:
@@ -34,4 +28,10 @@ services:
     links:
       - site
 
+  ssh:
+    image: adventure/sshd
+    volumes_from:
+      - nginx
+    links:
+      - ldap
 
