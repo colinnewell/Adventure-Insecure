@@ -17,7 +17,7 @@ phones = Blueprint('phones', __name__, url_prefix='/phones')
 @phones.route('/search', methods=['GET'])
 @login_required
 def search():
-    form = SearchForm(request.args)
+    form = SearchForm(request.args, csrf_enabled=False)
     result = {}
     if form.validate_on_submit():
         result['set'] = True
