@@ -69,17 +69,17 @@ def signup():
         user = User.query.filter_by(email=email).first()
         # lets see if the user is on ldap
         ldap_user = current_app.ldap.user_info_by_email(email, ['displayName'])
-        # ['displayName']
-        if ldap_user:
+        if user:
+            # if the user is found send them a password reset email
+            pass
+        elif ldap_user:
+            logging.warn(ldap_user)
             name = ldap_user['attributes']['displayName'][0]
             u = User(name, email, '*****', ldap_auth=True)
             db.session.add(u)
             db.session.commit()
             flash('User account setup, login with your LDAP password', 'message')
             return redirect(url_for('auth.login'))
-        elif user:
-            # if the user is found send them a password reset email
-            pass
         else:
             # FIXME: check for existing attempts.
             attempt = SignupAttempt.AttemptFor(email)
