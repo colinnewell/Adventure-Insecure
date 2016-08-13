@@ -7,9 +7,9 @@ RUN pip install -r /opt/adventure/requirements.txt
 COPY src /opt/adventure/
 WORKDIR /opt/adventure/
 RUN mkdir -p /var/lib/adventure/db \
-    mkdir -p /var/lib/adventure/upload \
-    mkdir -p /var/lib/adventure/sessions \
-    mkdir -p /var/lib/adventure/menus \
+    && mkdir -p /var/lib/adventure/upload \
+    && mkdir -p /var/lib/adventure/sessions \
+    && mkdir -p /var/lib/adventure/menus \
     && chown -R adventure.adventure /var/lib/adventure
 ENV APP_SETTINGS config.ProductionConfig
 # NOTE: this sqlite db is setup so that the box can potentially
