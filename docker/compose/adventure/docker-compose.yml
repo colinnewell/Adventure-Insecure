@@ -25,8 +25,6 @@ services:
 
   nginx:
     image: adventure/nginx
-    volumes:
-      - ./cache:/var/cache/nginx
     links:
       - site
 
