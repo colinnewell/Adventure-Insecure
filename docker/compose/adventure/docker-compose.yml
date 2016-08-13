@@ -9,14 +9,14 @@ services:
       POSTGRES_PASSWORD: anothernotverysecurepassword
 
   ldap:
-    image: adventure/ldap
+    image: quay.io/colinn/adventure-ldap
     environment:
       LDAP_DOMAIN: adventure.org
       LDAP_ORGANISATION: Adventure
       LDAP_ADMIN_PASSWORD: notaverysecurepassword
 
   site:
-    image: adventure/adventure
+    image: quay.io/colinn/adventure-site
     links:
       - db
       - ldap
@@ -24,12 +24,12 @@ services:
       CONNECTION_STRING: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
 
   nginx:
-    image: adventure/nginx
+    image: quay.io/colinn/adventure-nginx
     links:
       - site
 
   ssh:
-    image: adventure/sshd
+    image: quay.io/colinn/adventure-ssh
     volumes_from:
       - nginx
     links:
