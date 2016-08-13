@@ -1,16 +1,17 @@
 FROM python:3
 MAINTAINER Colin Newell <colin.newell@gmail.com>
 
-RUN groupadd -r adventure && useradd -r -g adventure adventure
+RUN groupadd -r adventure && useradd -r -d /home/adventure -g adventure adventure
 COPY requirements.txt /opt/adventure/
 RUN pip install -r /opt/adventure/requirements.txt
 COPY src /opt/adventure/
 WORKDIR /opt/adventure/
 RUN mkdir -p /var/lib/adventure/db \
     && mkdir -p /var/lib/adventure/upload \
+    && mkdir -p /home/adventure \
     && mkdir -p /var/lib/adventure/sessions \
     && mkdir -p /var/lib/adventure/menus \
-    && chown -R adventure.adventure /var/lib/adventure
+    && chown -R adventure.adventure /var/lib/adventure /home/adventure
 ENV APP_SETTINGS config.ProductionConfig
 # NOTE: this sqlite db is setup so that the box can potentially
 # run standalone.
