@@ -16,7 +16,7 @@ tag:
 	docker tag adventure/adventure quay.io/colinn/adventure-site
 	docker tag adventure/ldap quay.io/colinn/adventure-ldap
 	docker tag adventure/nginx quay.io/colinn/adventure-nginx
-	docker tag adventure/ssh quay.io/colinn/adventure-ssh
+	docker tag adventure/sshd quay.io/colinn/adventure-ssh
 
 push:
 	docker push quay.io/colinn/adventure-site
