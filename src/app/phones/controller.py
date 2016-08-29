@@ -25,6 +25,8 @@ def search():
         # FIXME: should probably order this so that we can
         # allow for more complex scenarios.
         office = OfficeNumber.query.filter(text("'%s' like number_prefix || '%%'" % phone)).first()
+        #prefix_query = text(":number like number_prefix || '%'").bindparams(number=phone)
+        #office = OfficeNumber.query.filter(prefix_query).first()
         if office:
             result['company'] = office
 
