@@ -74,8 +74,10 @@ if __name__ == '__main__':
     ldap = LDAP(conn, 'dc=adventure,dc=org')
 
     ldap.add_group('developer', 5000)
-    ldap.add_user('dev1', 'Developer 1', '1', 'insecure', 5000, 10000)
+    ldap.add_user('dev1', 'Developer 1', '1', 'alongsecurepassword', 5000, 10000)
+    ldap.add_user('admin', 'Administrator', '1', 'someverysecurepassword', 5000, 10001)
     ldap.add_user_to_group('dev1', 'developer')
+    ldap.add_user_to_group('admin', 'developer')
     ldap.add_sudo_group('%developer')
     ldap.add_sudo_group('dev1')
 
