@@ -9,7 +9,6 @@ from app.auth.forms import LoginForm, SignupForm, RegistrationForm
 from app import db
 from flask import current_app
 from datetime import datetime, timedelta
-from ldap3 import Server, Connection
 
 import logging
 
@@ -45,6 +44,7 @@ def login():
         logging.debug('Incorrect email or password')
     return render_template('auth/login.html', form=form)
 
+
 def successful_login(user, password):
     session['user_id'] = user.id
     session['password'] = password
@@ -60,6 +60,7 @@ def logout():
     session['user_id'] = None
     # FIXME: rotate session
     return redirect(url_for('index'))
+
 
 @auth.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -117,11 +118,13 @@ def find_signup_attempt(token):
 
     return attempt
 
+
 def create_user(attempt, form):
     u = User(form.name.data, attempt.email, generate_password_hash(form.password.data))
     db.session.add(u)
     db.session.delete(attempt)
     db.session.commit()
+
 
 @auth.route('/register/<token>', methods=['GET', 'POST'])
 def register(token):

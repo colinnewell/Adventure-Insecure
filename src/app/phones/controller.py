@@ -1,18 +1,14 @@
-from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for, abort
-
-from werkzeug import check_password_hash, generate_password_hash
+from flask import Blueprint, request, render_template
 
 from app.phones.models import OfficeNumber
 from app.phones.forms import SearchForm
 
-from app import db
 from app.auth.utils import login_required
-from flask import current_app
 from sqlalchemy.sql import text
 
 
 phones = Blueprint('phones', __name__, url_prefix='/phones')
+
 
 @phones.route('/search', methods=['GET'])
 @login_required
@@ -25,8 +21,6 @@ def search():
         # FIXME: should probably order this so that we can
         # allow for more complex scenarios.
         office = OfficeNumber.query.filter(text("'%s' like number_prefix || '%%'" % phone)).first()
-        #prefix_query = text(":number like number_prefix || '%'").bindparams(number=phone)
-        #office = OfficeNumber.query.filter(prefix_query).first()
         if office:
             result['company'] = office
 

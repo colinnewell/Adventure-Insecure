@@ -27,11 +27,12 @@ services:
     image: quay.io/colinn/adventure-nginx
     links:
       - site
+    volumes: 
+      - ./cache:/var/cache/nginx
 
   ssh:
     image: quay.io/colinn/adventure-ssh
-    volumes_from:
-      - nginx
+    volumes: 
+      - ./cache:/var/cache/nginx
     links:
       - ldap
-

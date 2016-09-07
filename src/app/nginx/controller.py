@@ -1,5 +1,5 @@
-from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for, abort, current_app
+from flask import Blueprint, render_template, \
+    flash, session, redirect, url_for, current_app
 from app.auth.utils import admin_required
 from app.nginx.forms import ConfirmClearForm
 from app.auth.models import User

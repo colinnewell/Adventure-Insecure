@@ -1,11 +1,8 @@
 from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for, abort
-from werkzeug import secure_filename
+    session, redirect, url_for
 from app.auth.utils import login_required
-from sqlalchemy.sql import func, text
 from app.lunch.models import Order, OrderLine
 from app.lunch.forms import OrderForm, OrderLineForm
-import os
 from app import db
 
 

@@ -1,4 +1,4 @@
-from ldap3 import Server, Connection, SUBTREE
+from ldap3 import Connection, SUBTREE
 from ldap3.utils.dn import escape_attribute_value
 
 
@@ -13,7 +13,6 @@ class LDAP:
         conn = Connection(self.server, user=user, password=password)
         conn.bind()
         return conn
-
 
     def find_user_by_email(self, email):
         entry = self.user_info_by_email(email, ['dn'])

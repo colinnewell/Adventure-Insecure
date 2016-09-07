@@ -1,9 +1,9 @@
 from flask import Blueprint, request, render_template, \
-    flash, session, redirect, url_for, abort, current_app
+    flash, session, redirect, url_for, current_app
 from flask.helpers import send_from_directory
 from app import db
 from werkzeug import secure_filename
-from app.auth.utils import login_required, admin_required
+from app.auth.utils import admin_required
 from app.menus.models import Menu
 from app.menus.forms import BulkUploadForm, MenuAdminForm
 from zipfile import ZipFile
@@ -14,6 +14,7 @@ import shutil
 
 
 menus = Blueprint('menus', __name__, url_prefix='/menus')
+
 
 @menus.route('/', methods=['GET'])
 def index():
@@ -94,7 +95,6 @@ def upload():
     return render_template('menus/upload.html', form=form)
 
 
-
 @menus.route('/menu/<path:filename>', methods=['GET'])
 def menu(filename):
     return send_from_directory(current_app.config['MENUS_FOLDER'],
@@ -104,6 +104,7 @@ def menu(filename):
 class MenuList:
     def __init__(self, menus):
         self.menus = menus
+
 
 @menus.route('/menu_admin', methods=['GET', 'POST'])
 @admin_required

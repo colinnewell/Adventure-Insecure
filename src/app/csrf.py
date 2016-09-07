@@ -2,10 +2,10 @@ import hmac
 import hashlib
 import time
 import random
-import os
-from flask import current_app, session
-from flask_wtf._compat import to_bytes, string_types
+from flask import current_app
+from flask_wtf._compat import to_bytes
 from werkzeug.security import safe_str_cmp
+
 
 def generate_csrf(secret_key=None, time_limit=None):
     """Generate csrf token code.
@@ -39,6 +39,7 @@ def generate_csrf(secret_key=None, time_limit=None):
         digestmod=hashlib.sha1
     ).hexdigest()
     return '%s##%s' % (csrf_build, hmac_csrf)
+
 
 def validate_csrf(data, secret_key=None, time_limit=None):
     """Check if the given data is a valid csrf token.

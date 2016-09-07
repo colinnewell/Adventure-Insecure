@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField, HiddenField
+from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 from app.auth.forms import OwnCSRF
 from flask import request
@@ -11,5 +11,6 @@ class SearchForm(OwnCSRF, Form):
     submit = SubmitField('Search')
 
     def is_submitted(self):
-        return request and request.method == 'GET' and 'submit' in request.args
-
+        return request \
+                and request.method == 'GET' \
+                and 'submit' in request.args

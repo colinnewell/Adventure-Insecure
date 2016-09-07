@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField, HiddenField
+from wtforms import StringField, SubmitField
 from app.auth.forms import OwnCSRF
 
 
@@ -11,4 +11,3 @@ class OrderForm(OwnCSRF, Form):
 class OrderLineForm(OwnCSRF, Form):
     request = StringField('Request')
     submit = SubmitField('Add')
-

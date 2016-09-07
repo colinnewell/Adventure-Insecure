@@ -2,6 +2,7 @@ import random
 import hashlib
 import logging
 
+
 def secure_token():
     random_values = ''.join(["%.4x" % random.getrandbits(32) for _ in range(10)])
     logger = logging.getLogger('securetoken')

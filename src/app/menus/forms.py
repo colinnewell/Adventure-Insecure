@@ -1,7 +1,6 @@
 from flask_wtf import Form
-from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField, HiddenField
-from flask_wtf.file import FileField, FileRequired
-from wtforms.validators import Required, EqualTo, Regexp
+from wtforms import StringField, SubmitField, BooleanField, FieldList, FormField
+from flask_wtf.file import FileField
 from app.auth.forms import OwnCSRF
 
 
