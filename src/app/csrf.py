@@ -2,7 +2,7 @@ import hmac
 import hashlib
 import time
 import random
-from flask import current_app
+from flask import current_app, session
 from flask_wtf._compat import to_bytes
 from werkzeug.security import safe_str_cmp
 
@@ -35,7 +35,7 @@ def generate_csrf(secret_key=None, time_limit=None):
 
     hmac_csrf = hmac.new(
         to_bytes(secret_key),
-        to_bytes(csrf_build),
+        to_bytes(session.sid + csrf_build),
         digestmod=hashlib.sha1
     ).hexdigest()
     return '%s##%s' % (csrf_build, hmac_csrf)
@@ -79,7 +79,7 @@ def validate_csrf(data, secret_key=None, time_limit=None):
 
     hmac_compare = hmac.new(
         to_bytes(secret_key),
-        to_bytes(csrf_build),
+        to_bytes(session.sid + csrf_build),
         digestmod=hashlib.sha1
     ).hexdigest()
 
