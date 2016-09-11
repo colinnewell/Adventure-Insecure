@@ -21,6 +21,7 @@ RUN echo '-:ALL EXCEPT root (login):ALL EXCEPT LOCAL' >> /etc/security/access.co
 RUN echo "sudoers_base ou=SUDOers,dc=adventure,dc=org" >>/etc/ldap/ldap.conf
 RUN echo "BASE dc=adventure,dc=org" >>/etc/ldap/ldap.conf
 RUN echo "URI  ldap://ldap/ " >>/etc/ldap/ldap.conf
+VOLUME ['/var/cache/nginx']
 
 EXPOSE 22
 COPY entrypoint.sh /entrypoint.sh
