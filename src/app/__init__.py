@@ -1,5 +1,5 @@
 from flask_bootstrap import Bootstrap
-from flask import Flask, render_template, session
+from flask import Flask, render_template
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from app.csrf import generate_csrf, validate_csrf
@@ -59,4 +59,3 @@ def _get_user():
 @app.context_processor
 def inject_user():
     return dict(user=_get_user())
-    
