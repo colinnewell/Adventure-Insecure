@@ -1,6 +1,14 @@
-An insecure application.
+# An insecure application.
 
 Don't host this publicly unless you want to provide a remote shell to hackers.
+
+To run this properly with a Postgres database use the docker compose setup
+in the docker directory.  That has additional infrastructure necessary, and
+deep within the compose directory is a docker-compose file.
+
+Some exploits may not work very well with the SQLite database.
+
+This was developed to accompany my talk at PyConUK 2016.
 
 ## Development
 
