@@ -4,6 +4,11 @@ MAINTAINER Colin Newell <colin.newell@gmail.com>
 RUN groupadd -r adventure && useradd -r -d /home/adventure -g adventure adventure
 COPY requirements.txt /opt/adventure/
 RUN pip install -r /opt/adventure/requirements.txt
+# NOTE: using fork by moreati
+# https://github.com/moreati/python-zxcvbn
+# for Python 3 support.
+COPY zxcvbn-1.0.tar.gz /root/zxcvbn-1.0.tar.gz
+RUN pip install /root/zxcvbn-1.0.tar.gz
 COPY src /opt/adventure/
 WORKDIR /opt/adventure/
 RUN mkdir -p /var/lib/adventure/db \
