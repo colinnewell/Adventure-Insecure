@@ -1,0 +1,23 @@
+## Build
+
+    make
+    make tag
+
+## Run
+
+The compose file to bring up the whole environment is in compose/adventure.
+
+Once it's up you may need to re-initialisze the database.  The system does try
+to do it as it starts up, but it can come up too quickly for the database.
+
+To setup the LDAP side run the setup_ldap.sh script in this directory.  Make
+sure that you have your virtual env loaded so that it has the ldap3 library.
+
+Note the weak hard coded passwords in the configs.  These should either be changed
+directly, or you should add an extra compose file to merge in better passwords.
+
+And the ldap_init.py has passwords too.
+
+Obviously the whole system is insecure so passwords don't really make a difference,
+if the system is available on the internet, it's a remote shell waiting to happen.
+
