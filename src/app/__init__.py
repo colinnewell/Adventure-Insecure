@@ -14,7 +14,8 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 Bootstrap(app)
 Session(app)
 server = Server(app.config['LDAP_SERVER'])
-app.ldap = LDAP(server, app.config['LDAP_DN'])
+if app.config['LDAP_DN']:
+    app.ldap = LDAP(server, app.config['LDAP_DN'])
 flask_wtf.csrf.validate_csrf = validate_csrf
 flask_wtf.csrf.generate_csrf = generate_csrf
 flask_wtf.csrf.CsrfProtect(app)

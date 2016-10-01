@@ -17,7 +17,10 @@ class Config(object):
     MENUS_FOLDER = os.path.join('/tmp', 'menus')
 
     LDAP_SERVER = os.environ.get('LDAP_SERVER') or 'localhost'
-    LDAP_DN = os.environ.get('LDAP_DN') or 'dc=adventure,dc=org'
+    if 'LDAP_DN' in os.environ:
+        LDAP_DN = os.environ.get('LDAP_DN')
+    else:
+        LDAP_DN = 'dc=adventure,dc=org'
 
 
 class ProductionConfig(Config):

@@ -69,7 +69,7 @@ def signup():
         email = form.email.data
         user = User.query.filter_by(email=email).first()
         # lets see if the user is on ldap
-        ldap_user = current_app.ldap.user_info_by_email(email, ['displayName'])
+        ldap_user = hasattr(current_app, 'ldap') and current_app.ldap.user_info_by_email(email, ['displayName'])
         if user:
             # if the user is found send them a password reset email
             pass
