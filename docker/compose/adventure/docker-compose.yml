@@ -17,7 +17,7 @@ services:
 
   site:
     image: quay.io/colinn/adventure-site
-    links:
+    depends_on:
       - db
       - ldap
     environment:
@@ -25,7 +25,7 @@ services:
 
   nginx:
     image: quay.io/colinn/adventure-nginx
-    links:
+    depends_on:
       - site
     volumes: 
       - ./cache:/var/cache/nginx
@@ -34,5 +34,5 @@ services:
     image: quay.io/colinn/adventure-ssh
     volumes: 
       - ./cache:/var/cache/nginx
-    links:
+    depends_on:
       - ldap
