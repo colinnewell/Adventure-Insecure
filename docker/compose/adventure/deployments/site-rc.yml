@@ -19,7 +19,10 @@ spec:
       containers:
       - env:
         - name: CONNECTION_STRING
-          value: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: connection-string
         image: quay.io/colinn/adventure-site
         imagePullPolicy: ""
         name: site

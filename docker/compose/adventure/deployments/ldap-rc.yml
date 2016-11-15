@@ -19,11 +19,20 @@ spec:
       containers:
       - env:
         - name: LDAP_ADMIN_PASSWORD
-          value: notaverysecurepassword
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: ldap-admin-password
         - name: LDAP_DOMAIN
-          value: adventure.org
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: ldap-domain
         - name: LDAP_ORGANISATION
-          value: Adventure
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: ldap-organisation
         image: quay.io/colinn/adventure-ldap
         imagePullPolicy: ""
         name: ldap

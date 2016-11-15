@@ -19,9 +19,15 @@ spec:
       containers:
       - env:
         - name: POSTGRES_PASSWORD
-          value: anothernotverysecurepassword
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: postgres-password
         - name: POSTGRES_USER
-          value: adventure
+          valueFrom:
+            secretKeyRef:
+              name: adventure
+              key: postgres-user
         image: postgres
         imagePullPolicy: ""
         name: db

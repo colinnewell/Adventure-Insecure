@@ -18,7 +18,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: CONNECTION_STRING
-              value: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
+              valueFrom:
+                secretKeyRef:
+                  name: adventure
+                  key: connection-string
           command:
             - "python"
             - "/opt/adventure/manage.py"
