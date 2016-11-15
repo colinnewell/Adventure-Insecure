@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  name: ldap
+  namespace: default
+spec:
+  ports:
+    - port: 389
+      protocol: TCP
+      targetPort: 389
+      name: ldap
+    - port: 636
+      protocol: TCP
+      targetPort: 636
+      name: ldap-ssl
+  selector:
+    service: ldap
+status:
+  loadBalancer: {}
