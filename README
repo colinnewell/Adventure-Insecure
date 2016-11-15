@@ -10,8 +10,9 @@ Some exploits may not work very well with the SQLite database.
 
 This was developed to accompany my talk at PyConUK 2016 - An adventure in exploitation with Python
 
-* http://2016.pyconuk.org/talks/an-adventure-in-exploitation-with-python/
-* https://docs.google.com/presentation/d/1edFsGyEihKJZwaJAJBaJ9yDPWpOVfGZmaA7LkF3VinA/pub?start=false&loop=false&delayms=3000.
+* Synopsis - http://2016.pyconuk.org/talks/an-adventure-in-exploitation-with-python/
+* Slides - https://docs.google.com/presentation/d/1edFsGyEihKJZwaJAJBaJ9yDPWpOVfGZmaA7LkF3VinA/pub?start=false&loop=false&delayms=3000.
+* Video - https://www.youtube.com/watch?v=Es9LjkrZT1Q
 
 ## Development
 
