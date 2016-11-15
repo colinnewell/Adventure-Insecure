@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Job
+metadata:
+  name: adventure-db-schema-load
+spec:
+  selector:
+    matchLabels:
+      task: db-schema-load
+  template:
+    metadata:
+      name: adventure-db-schema-load
+      labels:
+        task: db-schema-load
+    spec:
+      containers:
+        - name: adventure
+          image: quay.io/colinn/adventure-site
+          imagePullPolicy: Always
+          env:
+            - name: CONNECTION_STRING
+              value: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
+          command:
+            - "python"
+            - "/opt/adventure/manage.py"
+            - "db"
+            - "upgrade"
+      restartPolicy: Never
