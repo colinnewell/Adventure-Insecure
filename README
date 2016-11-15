@@ -8,7 +8,10 @@ deep within the compose directory is a docker-compose file.
 
 Some exploits may not work very well with the SQLite database.
 
-This was developed to accompany my talk at PyConUK 2016.
+This was developed to accompany my talk at PyConUK 2016 - An adventure in exploitation with Python
+
+* http://2016.pyconuk.org/talks/an-adventure-in-exploitation-with-python/
+* https://docs.google.com/presentation/d/1edFsGyEihKJZwaJAJBaJ9yDPWpOVfGZmaA7LkF3VinA/pub?start=false&loop=false&delayms=3000.
 
 ## Development
 
