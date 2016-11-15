@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  creationTimestamp: null
+  labels:
+    service: site
+  name: site
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    service: site
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: site
+    spec:
+      containers:
+      - env:
+        - name: CONNECTION_STRING
+          value: postgresql://adventure:anothernotverysecurepassword@db:5432/adventure
+        image: quay.io/colinn/adventure-site
+        imagePullPolicy: ""
+        name: site
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status:
+  replicas: 0
