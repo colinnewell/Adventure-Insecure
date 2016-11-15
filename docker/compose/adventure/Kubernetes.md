@@ -2,8 +2,6 @@
 
 This is very early stages work to run the site under Kubernetes.
 
-Note that we need to do things like utilize secrets.
-
 ```
 kubectl create secret generic adventure \
     --from-literal=postgres-password=anothernotverysecurepassword \
