@@ -8,7 +8,12 @@ spec:
   ports:
     - port: 80
       protocol: TCP
+      name: http
       targetPort: 80
+    - port: 22
+      protocol: TCP
+      name: ssh
+      targetPort: 22
   selector:
     service: nginx
   type: LoadBalancer

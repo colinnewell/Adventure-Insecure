@@ -17,18 +17,37 @@ spec:
         service: nginx
     spec:
       containers:
-      - image: quay.io/colinn/adventure-nginx
+
+      - image: quay.io/colinn/adventure-nginx:v2
         imagePullPolicy: ""
         name: nginx
         resources: {}
         volumeMounts:
         - mountPath: /var/cache/nginx
           name: cache
+        ports:
+          - containerPort: 80
+            name: http
+            protocol: TCP
+
+      - image: quay.io/colinn/adventure-ssh:v2
+        imagePullPolicy: ""
+        name: ssh
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/cache/nginx
+          name: cache
+        ports:
+          - containerPort: 22
+            name: ssh
+            protocol: TCP
+
       restartPolicy: Always
       serviceAccountName: ""
       volumes:
       - hostPath:
           path: /data/cache
         name: cache
+
 status:
   replicas: 0
