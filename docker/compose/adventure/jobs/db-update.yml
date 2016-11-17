@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: adventure
-          image: quay.io/colinn/adventure-site
+          image: quay.io/colinn/adventure-site:v2
           imagePullPolicy: Always
           env:
             - name: CONNECTION_STRING

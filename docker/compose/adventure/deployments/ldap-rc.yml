@@ -33,7 +33,7 @@ spec:
             secretKeyRef:
               name: adventure
               key: ldap-organisation
-        image: quay.io/colinn/adventure-ldap
+        image: quay.io/colinn/adventure-ldap:v2
         imagePullPolicy: ""
         name: ldap
         resources: {}

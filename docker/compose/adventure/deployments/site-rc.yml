@@ -23,7 +23,7 @@ spec:
             secretKeyRef:
               name: adventure
               key: connection-string
-        image: quay.io/colinn/adventure-site
+        image: quay.io/colinn/adventure-site:v2
         imagePullPolicy: ""
         name: site
         resources: {}
