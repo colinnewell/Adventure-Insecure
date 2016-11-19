@@ -1,6 +1,7 @@
 FROM python:3
 MAINTAINER Colin Newell <colin.newell@gmail.com>
 
+RUN apt-get update && apt-get install -y netcat
 RUN groupadd -r adventure && useradd -r -d /home/adventure -g adventure adventure
 COPY requirements.txt /opt/adventure/
 RUN pip install -r /opt/adventure/requirements.txt
