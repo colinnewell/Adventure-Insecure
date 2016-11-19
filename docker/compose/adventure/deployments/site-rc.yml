@@ -1,15 +1,14 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   creationTimestamp: null
-  labels:
-    service: site
   name: site
   namespace: default
+  labels:
+    service: site
+
 spec:
   replicas: 1
-  selector:
-    service: site
   template:
     metadata:
       creationTimestamp: null
@@ -23,10 +22,21 @@ spec:
             secretKeyRef:
               name: adventure
               key: connection-string
-        image: quay.io/colinn/adventure-site:v2
+        image: quay.io/colinn/adventure-site:v3
         imagePullPolicy: ""
         name: site
         resources: {}
+        ports:
+          - containerPort: 3000
+            name: http
+            protocol: TCP
+
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 3000
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
       restartPolicy: Always
       serviceAccountName: ""
       volumes: null

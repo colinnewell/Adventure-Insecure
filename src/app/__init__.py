@@ -45,6 +45,14 @@ app.register_blueprint(nginx)
 def index():
     return render_template('index.html')
 
+@app.route('/healthz')
+def healthz():
+    return 'OK'
+
+@app.route('/readiness')
+def readiness():
+    return 'OK'
+
 # FIXME: should move this out of the core app code.
 from app.auth.models import User
 from flask import session
