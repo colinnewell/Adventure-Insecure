@@ -11,8 +11,8 @@ kubectl create secret generic adventure \
     --from-literal=ldap-domain=adventure.org \
     --from-literal=ldap-organisation=Adventure
 
-for f in deployments/*; do kubectl create -f $f; done
-for f in services/*; do kubectl create -f $f; done
+kubectl create -f deployments/
+kubectl create -f services/
 ```
 
 ## Database upgrade
