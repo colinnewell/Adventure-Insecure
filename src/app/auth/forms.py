@@ -48,7 +48,8 @@ class LoginForm(OwnCSRF, Form):
     email = StringField('Email Address', [Email(),
                       Required(message='This is required')])
     password = PasswordField('Password',
-                             [Required(message='Must specify a password')])
+                             [Required(message='Must specify a password')],
+                             render_kw={'autocomplete': 'off'})
     submit = SubmitField('Login')
 
 
