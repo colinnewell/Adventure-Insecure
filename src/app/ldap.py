@@ -1,5 +1,5 @@
 from ldap3 import Connection, SUBTREE
-from ldap3.utils.dn import escape_attribute_value
+from ldap3.utils.dn import _escape_attribute_value
 
 
 class LDAP:
@@ -21,7 +21,7 @@ class LDAP:
         return None
 
     def user_info_by_email(self, email, attributes):
-        search_filter = '(mail=%s)' % escape_attribute_value(email)
+        search_filter = '(mail=%s)' % _escape_attribute_value(email)
         base = 'ou=People,%s' % self.dn
         c = self.connection()
         c.search(
