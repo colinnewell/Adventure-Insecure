@@ -1,11 +1,11 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 from app.auth.forms import OwnCSRF
 from flask import request
 
 
-class SearchForm(OwnCSRF, Form):
+class SearchForm(OwnCSRF, FlaskForm):
 
     phone_number = StringField('Phone Number', [Required(message='Specify a number to look up')])
     submit = SubmitField('Search')

@@ -7,7 +7,7 @@ from flask_wtf._compat import to_bytes
 from werkzeug.security import safe_str_cmp
 
 
-def generate_csrf(secret_key=None, time_limit=None):
+def generate_csrf(secret_key=None, time_limit=None, token_key=None):
     """Generate csrf token code.
 
     :param secret_key: A secret key for mixing in the token,
