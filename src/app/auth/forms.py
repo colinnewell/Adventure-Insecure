@@ -1,8 +1,13 @@
 from flask_wtf import FlaskForm
+from flask_wtf.csrf import _FlaskFormCSRF
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import Required, Email, Regexp, StopValidation
 from app.csrf import generate_csrf, validate_csrf
 from zxcvbn import password_strength
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class StrongPassword():
@@ -30,18 +35,31 @@ class StrongPassword():
                 raise StopValidation(message)
 
 
-class OwnCSRF():
-    # actually uses env/lib/python3.5/site-packages/flask_wtf/form.py
-    def generate_csrf_token(self, csrf_context):
-        if not self.csrf_enabled:
-            return None
-        return generate_csrf(self.SECRET_KEY, self.TIME_LIMIT)
+class OwnCSRF(_FlaskFormCSRF):
+    # reimplementing _FlaskFormCSRF to use our own
+    # generate_csrf/validate_csrf methods.
+    # rather brittle as it's vendored internal code.
+    def generate_csrf_token(self, csrf_token_field):
+        return generate_csrf(
+            secret_key=self.meta.csrf_secret,
+            token_key=self.meta.csrf_field_name
+        )
 
-    def validate_csrf_token(self, field):
-        if not self.csrf_enabled:
-            return True
-        if not validate_csrf(field.data, self.SECRET_KEY, self.TIME_LIMIT):
-            raise ValidationError(field.gettext('CSRF token missing'))
+    def validate_csrf_token(self, form, field):
+        if g.get('csrf_valid', False):
+            # already validated by CSRFProtect
+            return
+
+        try:
+            validate_csrf(
+                field.data,
+                self.meta.csrf_secret,
+                self.meta.csrf_time_limit,
+                self.meta.csrf_field_name
+            )
+        except ValidationError as e:
+            logger.info(e.args[0])
+            raise
 
 
 class LoginForm(OwnCSRF, FlaskForm):

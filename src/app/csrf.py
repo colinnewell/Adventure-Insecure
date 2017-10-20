@@ -41,7 +41,7 @@ def generate_csrf(secret_key=None, time_limit=None, token_key=None):
     return '%s##%s' % (csrf_build, hmac_csrf)
 
 
-def validate_csrf(data, secret_key=None, time_limit=None):
+def validate_csrf(data, secret_key=None, time_limit=None, fieldname=False):
     """Check if the given data is a valid csrf token.
 
     :param data: The csrf token value to be checked.
