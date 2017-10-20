@@ -5,6 +5,7 @@ Flask-Migrate
 Flask-WTF
 Flask-Mail
 Flask-Bootstrap
+Flask-Script
 Flask-Session
 uwsgi
 ldap3
