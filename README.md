@@ -1,5 +1,9 @@
 # An insecure application.
 
+This has been archived.  Sadly the python dependencies weren't properly pinned so while the app
+worked in 2016 when the talk was given it stopped working some time after and an attempt to
+upgrade the deps and the code to make them work never got finished.
+
 Don't host this publicly unless you want to provide a remote shell to hackers.
 
 To run this properly with a Postgres database use the docker compose setup
